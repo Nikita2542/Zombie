@@ -1,0 +1,590 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &851635921183878134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7630459489435281219}
+  - component: {fileID: 6787033975987217563}
+  - component: {fileID: 6548823863383035438}
+  m_Layer: 11
+  m_Name: Fog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7630459489435281219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851635921183878134}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8341037283422280430}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6787033975987217563
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851635921183878134}
+  m_Mesh: {fileID: 5022432329719827366, guid: 1e863fcd07fe5c442839d877f26f6456, type: 3}
+--- !u!23 &6548823863383035438
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851635921183878134}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: fffc9e2c5e4232745aa1f7e7c2b7bbc5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3379704126051667933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8341037283422280430}
+  - component: {fileID: 6725042017862189683}
+  m_Layer: 0
+  m_Name: Cozy Weather Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 391aaa0b581312941b814e87136835b7, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8341037283422280430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379704126051667933}
+  m_LocalRotation: {x: 0.0000000037252899, y: -0, z: -0.0000000074505797, w: 1}
+  m_LocalPosition: {x: 270.8, y: 70.6, z: 410.5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7630459489435281219}
+  - {fileID: 389179936643675193}
+  - {fileID: 738154457494087247}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6725042017862189683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379704126051667933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17adf51a847d5a49b9b1b21927a8627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forecastProfile: {fileID: 11400000, guid: 8a6296a55ec94494fa4791955335bbcc, type: 2}
+  weatherSelectionMode: 0
+  currentForecast: []
+  weatherTransitionTime: 15
+  weatherTimer: -15810
+  weatherSphere: {fileID: 6725042017862189683}
+  weight: 1
+  climateProfile: {fileID: 11400000, guid: e1a4bf0206b48d4428e0e961e057af39, type: 2}
+  localTemperatureFilter: 0
+  localPrecipitationFilter: 0
+  currentTemperature: 80.15355
+  currentTemperatureCelsius: 26.751972
+  currentPrecipitation: 50.71065
+  currentWeather: {fileID: 11400000, guid: df6d6974e6130cf4ba80f13cf41ae5f4, type: 2}
+  weatherChangeCheck: {fileID: 0}
+  weightedWeatherProfiles:
+  - weight: 1
+    profile: {fileID: 11400000, guid: df6d6974e6130cf4ba80f13cf41ae5f4, type: 2}
+    transitioning: 1
+  fogDensity: 1
+  usePhysicalSunHeight: 0
+  sunDirection: 76
+  sunPitch: 22.5
+  skyZenithColor: {r: 0.06313121, g: 0.18452336, b: 0.30063868, a: 1}
+  skyHorizonColor: {r: 0.37263456, g: 0.67694587, b: 0.8678863, a: 1}
+  cloudColor: {r: 0.6485745, g: 0.62445676, b: 0.6276161, a: 1}
+  cloudHighlightColor: {r: 3.8028479, g: 3.8028479, b: 3.8028479, a: 1}
+  highAltitudeCloudColor: {r: 1.0833969, g: 1.3920008, b: 1.382235, a: 1}
+  sunlightColor: {r: 0.9746823, g: 0.9179313, b: 0.78130907, a: 1}
+  starColor: {r: 0.4440171, g: 0.4440171, b: 0.4440171, a: 0.053681936}
+  ambientLightHorizonColor: {r: 0.52434677, g: 0.58209276, b: 0.60013103, a: 1}
+  ambientLightZenithColor: {r: 0.4261303, g: 0.6387468, b: 0.6792453, a: 1}
+  ambientLightMultiplier: 1.32
+  galaxyIntensity: 0
+  fogColor1: {r: 0, g: 0, b: 0, a: 0.007843138}
+  fogColor2: {r: 0.028320117, g: 0.16085152, b: 0.17608646, a: 0.13725491}
+  fogColor3: {r: 0.028627869, g: 0.18455622, b: 0.24490456, a: 0.5019608}
+  fogColor4: {r: 0.108479455, g: 0.16687457, b: 0.29065824, a: 0.75686276}
+  fogColor5: {r: 0.39669773, g: 0.66699296, b: 0.8424869, a: 1}
+  fogFlareColor: {r: 1.0833969, g: 1.3920008, b: 1.382235, a: 1}
+  gradientExponent: 0.262
+  atmosphereVariationMin: 0.36
+  atmosphereVariationMax: 0.75
+  atmosphereBias: 0.093
+  sunSize: 0.65
+  sunColor: {r: 10.432951, g: 10.432951, b: 10.432951, a: 1}
+  sunFalloff: 28.3
+  sunFlareColor: {r: 0.5176471, g: 0.6509804, b: 0.68235296, a: 1}
+  moonFalloff: 26.9
+  moonlightColor: {r: 0, g: 0, b: 0, a: 1}
+  moonFlareColor: {r: 0.023529412, g: 0.07450981, b: 0.06666667, a: 1}
+  galaxy1Color: {r: 1, g: 0, b: 0.110657215, a: 1}
+  galaxy2Color: {r: 0.4481132, g: 0.7251387, b: 1, a: 1}
+  galaxy3Color: {r: 0, g: 1, b: 0.123636246, a: 1}
+  lightScatteringColor: {r: 0, g: 0, b: 0, a: 0}
+  rainbowPosition: 16.8
+  rainbowWidth: 24.3
+  fogStart1: 2.9
+  fogStart2: 8
+  fogStart3: 11.6
+  fogStart4: 15.3
+  fogHeight: 0.86
+  fogDensityMultiplier: 1
+  fogLightFlareIntensity: 0.453
+  fogLightFlareFalloff: 8.066955
+  fogLightFlareSquish: 0.93
+  cloudMoonColor: {r: 0, g: 0, b: 0, a: 1}
+  cloudSunHighlightFalloff: 14.9
+  cloudMoonHighlightFalloff: 11.6
+  cloudWindSpeed: 3.13
+  clippingThreshold: 1
+  cloudMainScale: 35.9
+  cloudDetailScale: 4.02
+  cloudDetailAmount: 20.2
+  acScale: 0.77
+  cirroMoveSpeed: 0.36
+  cirrusMoveSpeed: 0.5
+  chemtrailsMoveSpeed: 0.5
+  cloudTextureColor: {r: 0.6675392, g: 0.6675392, b: 0.6675392, a: 1}
+  cloudCohesion: 0.85
+  spherize: 0.354
+  shadowDistance: 0.02
+  cloudThickness: 4
+  textureAmount: 1.36
+  cloudTexture: {fileID: 2800000, guid: 27248a215d4e5fe449733cb0631f0785, type: 3}
+  texturePanDirection: {x: 0.1, y: 1, z: 0.1}
+  rainbowIntensity: 0
+  useRainbow: 1
+  filterSaturation: 0
+  filterValue: 0
+  filterColor: {r: 1, g: 1, b: 1, a: 0}
+  sunFilter: {r: 1, g: 1, b: 1, a: 0}
+  cloudFilter: {r: 1, g: 1, b: 1, a: 0}
+  lockToCamera: 0
+  continuousUpdate: 1
+  atmosphereProfile: {fileID: 11400000, guid: 8cc0487e978305c49a20079f78f36ba0, type: 2}
+  perennialProfile: {fileID: 11400000, guid: 8ce0d8458b4495b4593c1e03027a0ce5, type: 2}
+  sunLight: {fileID: 199517902364325680}
+  cloudMesh: {fileID: 5688228860809640893}
+  skyMesh: {fileID: 4282354681804492303}
+  fogMesh: {fileID: 6548823863383035438}
+  cozyCamera: {fileID: 0}
+  cozyMaterials: {fileID: 7061407088233207762}
+  VFX: {fileID: 3502353974760380509}
+  window: 1
+  icon1: {fileID: 2800000, guid: 75645812b98cbf94b9dd8d2f9401cf16, type: 3}
+  icon2: {fileID: 2800000, guid: c669197bbed6f144b9740e40895f04e0, type: 3}
+  icon3: {fileID: 2800000, guid: e51b7563b2e461141a757c1b77ca0217, type: 3}
+  icon4: {fileID: 2800000, guid: db319a0b03d0cda4eb6b0b013758f7ce, type: 3}
+  atmosWindow: 0
+  atmosSettingsWindow: 1
+  timeCurrentWindow: 1
+  tickMovementWindow: 1
+  curveWindow: 1
+  tickLengthWindow: 1
+  currentWeatherWindow: 0
+  forecastWindow: 0
+  climateWindow: 0
+  win1: 0
+  win2: 1
+  win3: 0
+  win4: 1
+  events:
+    timeToCheckFor: 0.75
+    currentTick: 242
+    currentHour: 16
+    useEvents: 1
+  cozyTriggerTag: FX Block Zone
+  cozyTriggers: []
+  calendar:
+    currentTicks: 242
+    meridiemTime:
+      hours: 4
+      minutes: 12
+      meridiem: 1
+    currentDay: 24
+    currentYear: 0
+  ecosystems:
+  - {fileID: 6725042017862189683}
+  currentWeatherProfiles:
+  - weight: 1
+    profile: {fileID: 11400000, guid: df6d6974e6130cf4ba80f13cf41ae5f4, type: 2}
+    transitioning: 1
+  setupProfiles: []
+  queuedWeather: []
+  possibleFilters: []
+  atmosphereControl: 1
+  timeControl: 0
+  skyStyle: 0
+  cloudStyle: 0
+  fogStyle: 1
+  transitioningAtmosphere: 0
+  transitioningWeather: 0
+  transitioningTime: 0
+  overrideAtmosphere: {fileID: 0}
+  overrideWeather: {fileID: 0}
+  overrideTime: {fileID: 0}
+  moduleHolder: {fileID: 2399348787323743800}
+  modules:
+  - {fileID: 7061407088233207762}
+  - {fileID: 3502353974760380509}
+  - {fileID: 1779923709825720353}
+  - {fileID: 8008847326518237418}
+  - {fileID: 3589606174311830089}
+  - {fileID: 1090295586897643134}
+  - {fileID: 3983659505457732538}
+  - {fileID: 1039384418910388161}
+--- !u!1001 &1830325660193395786
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8341037283422280430}
+    m_Modifications:
+    - target: {fileID: 132029710806365291, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: weatherSphere
+      value: 
+      objectReference: {fileID: 6725042017862189683}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660207456953215883, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: weatherSphere
+      value: 
+      objectReference: {fileID: 6725042017862189683}
+    - target: {fileID: 3025366853067803671, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: weatherSphere
+      value: 
+      objectReference: {fileID: 6725042017862189683}
+    - target: {fileID: 3025366853067803671, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_Stars.Array.data[0]
+      value: 
+      objectReference: {fileID: 6978226304801658511}
+    - target: {fileID: 3025366853067803671, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_Stars.Array.data[1]
+      value: 
+      objectReference: {fileID: 1020685347754377236}
+    - target: {fileID: 3025366853067803671, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_CloudParticles.Array.data[0]
+      value: 
+      objectReference: {fileID: 36915542486358108}
+    - target: {fileID: 3327687658090958832, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: weatherSphere
+      value: 
+      objectReference: {fileID: 6725042017862189683}
+    - target: {fileID: 4047236876869712498, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: m_Name
+      value: Modules
+      objectReference: {fileID: 0}
+    - target: {fileID: 8521860839880838304, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: weatherSphere
+      value: 
+      objectReference: {fileID: 6725042017862189683}
+    - target: {fileID: 8690178342634963864, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+      propertyPath: weatherSphere
+      value: 
+      objectReference: {fileID: 6725042017862189683}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+--- !u!4 &738154457494087247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1394124587244089861, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1039384418910388161 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1660207456953215883, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1853c68df23e2947a453a3eae3cbc3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1090295586897643134 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1605284171036086836, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4848f26f21fb62b4ab2eff2a7f4322a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1779923709825720353 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 132029710806365291, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c93c9c60b8ca344969955eadeba0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2399348787323743800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4047236876869712498, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3502353974760380509 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3025366853067803671, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275f5077ec6def040a29876b450d88ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3589606174311830089 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2933612134614681091, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a74a9016d5399e43b5ae0615ef01682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3983659505457732538 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3327687658090958832, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da724f7a7696a946946faca09b70529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7061407088233207762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8690178342634963864, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c4a05c730193845b59a8d6312b91d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8008847326518237418 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8521860839880838304, guid: 6c048a9428fe7ed498e15aad8683bc90, type: 3}
+  m_PrefabInstance: {fileID: 1830325660193395786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399348787323743800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dab820521c775a4cb3ddae8379d4f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &2740523386156904390
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8341037283422280430}
+    m_Modifications:
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523181185583321085, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+      propertyPath: m_Name
+      value: Sky
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+--- !u!198 &36915542486358108 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2777433452543178650, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &199517902364325680 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2651669130113571062, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &389179936643675193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2553240172830563327, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1020685347754377236 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2892006494466797522, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4282354681804492303 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2118294479457247689, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5688228860809640893 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7564056695750956155, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6978226304801658511 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5107056301745453385, guid: e79cd0c2fb040f74a8903c9dd592b384, type: 3}
+  m_PrefabInstance: {fileID: 2740523386156904390}
+  m_PrefabAsset: {fileID: 0}

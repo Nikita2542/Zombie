@@ -1,0 +1,287 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4047236876869712498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394124587244089861}
+  - component: {fileID: 1605284171036086836}
+  - component: {fileID: 2933612134614681091}
+  - component: {fileID: 8521860839880838304}
+  - component: {fileID: 132029710806365291}
+  - component: {fileID: 3025366853067803671}
+  - component: {fileID: 8690178342634963864}
+  - component: {fileID: 3327687658090958832}
+  - component: {fileID: 1660207456953215883}
+  m_Layer: 0
+  m_Name: Modules
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1394124587244089861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1605284171036086836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4848f26f21fb62b4ab2eff2a7f4322a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+--- !u!114 &2933612134614681091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a74a9016d5399e43b5ae0615ef01682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+  onMorning:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DistantLands.Cozy.LightListener, Assembly-CSharp
+        m_MethodName: TurnOffLight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onNoon:
+    m_PersistentCalls:
+      m_Calls: []
+  onEvening:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DistantLands.Cozy.LightListener, Assembly-CSharp
+        m_MethodName: TurnOnLight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMidnight:
+    m_PersistentCalls:
+      m_Calls: []
+  onNewTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onNewHour:
+    m_PersistentCalls:
+      m_Calls: []
+  onNewDay:
+    m_PersistentCalls:
+      m_Calls: []
+  onNewYear:
+    m_PersistentCalls:
+      m_Calls: []
+  onWeatherProfileChange:
+    m_PersistentCalls:
+      m_Calls: []
+  cozyEvents: []
+--- !u!114 &8521860839880838304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dab820521c775a4cb3ddae8379d4f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+  satellites:
+  - {fileID: 11400000, guid: 138feb9cd1ade8f49b916f2eb705bba8, type: 2}
+  satHolder: {fileID: 0}
+  hideInHierarchy: 1
+--- !u!114 &132029710806365291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c93c9c60b8ca344969955eadeba0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+  ambienceProfiles:
+  - {fileID: 11400000, guid: 163ec11415232fd45b172996c6d1d187, type: 2}
+  - {fileID: 11400000, guid: 2c0d3541fbea53b4bbf421041ce171c2, type: 2}
+  - {fileID: 11400000, guid: d96e5743cddd0fc48a2f91da0e6ef745, type: 2}
+  - {fileID: 11400000, guid: 50a77ac732a2b1542a65c767f053e9c4, type: 2}
+  - {fileID: 11400000, guid: 525f9daaa6dd9a644b60eae1b5e6dc21, type: 2}
+  - {fileID: 11400000, guid: bb850a98247763840baae3e22d59a3f6, type: 2}
+  - {fileID: 11400000, guid: 7e0a98c1708f889499b953da36c08e69, type: 2}
+  - {fileID: 11400000, guid: e1524d194ad97f34ebbaddeea31a44ca, type: 2}
+  - {fileID: 11400000, guid: f98db20d469ea5f4ebd58dea98f3267d, type: 2}
+  weightedAmbience: []
+  currentAmbienceProfile: {fileID: 11400000, guid: e1524d194ad97f34ebbaddeea31a44ca, type: 2}
+  ambienceChangeCheck: {fileID: 0}
+  timeToChangeProfiles: 7
+--- !u!114 &3025366853067803671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275f5077ec6def040a29876b450d88ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+  m_Stars:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_CloudParticles:
+  - {fileID: 0}
+  parent: {fileID: 0}
+  hideFXInHierarchy: 1
+  particleManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+    multiplier: 1
+  thunderManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+    thunderTime: {x: 61, y: 61}
+    thunderPrefab: {fileID: 9042205117616602755, guid: 94d052e37dff1ce498d1da48378a8e26, type: 3}
+    active: 0
+    thunderFX: []
+    defaultFX: {fileID: 11400000, guid: b101be0397baff54995266844d897b7b, type: 2}
+  filterManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+  audioManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+    volumeMultiplier: 1
+    weatherFXMixer: {fileID: 6122681528400141310, guid: 7657aaa11fc9748449b9a88b6a5dc9ca, type: 2}
+  postFXManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+  precipitationManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+    accumulationMultiplier: 1
+    precipitationFXes: []
+  windManager:
+    parent: {fileID: 0}
+    _IsEnabled: 1
+    _OpenTab: 0
+    vfx: {fileID: 3025366853067803671}
+    windZone: {fileID: 0}
+    windMultiplier: 1
+    useWindzone: 1
+    generateWindzoneAtRuntime: 1
+    useShaderWind: 1
+    windFXes: []
+--- !u!114 &8690178342634963864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c4a05c730193845b59a8d6312b91d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+  m_SnowAmount: 0
+  m_SnowMeltSpeed: 0.6
+  m_Wetness: 0
+  m_DryingSpeed: 0.5
+  snowSpeed: 0
+  rainSpeed: 0
+  profile: {fileID: 11400000, guid: 9811ba7ef96ef254eb2034d42353f712, type: 2}
+  precipitationFXes: []
+--- !u!114 &3327687658090958832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da724f7a7696a946946faca09b70529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}
+  reflectionCubemap: {fileID: 8900000, guid: c1206bb3fa7b1d14e81afd040dc52409, type: 2}
+  reflectionCamera: {fileID: 0}
+  framesBetweenRenders: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+--- !u!114 &1660207456953215883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047236876869712498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1853c68df23e2947a453a3eae3cbc3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weatherSphere: {fileID: 0}

@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Shitok
+  - Zombie_yellow
+  - ZonaPlayer
+  - Lishniy
+  - ZonaZombie
+  - Sliz_yellow
+  - Zombie_green
+  - Sliz_green
+  - Lab
+  - CameraLab
+  - Last
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - GrassUU
+  - Water
+  - UI
+  - Grass
+  - PostProcessing
+  - RCC
+  - RCC_WheelCollider
+  - RCC_DetachablePart
+  - RCC_Trailer
+  - RCC_Crasher
+  - PostProccesing
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

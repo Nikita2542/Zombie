@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4564732928849171407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5812135740554875925}
+  - component: {fileID: 2253064892943908138}
+  m_Layer: 2
+  m_Name: COZY Biome 2 (Tundra Zone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5812135740554875925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4564732928849171407}
+  m_LocalRotation: {x: -0, y: -0.38268322, z: -0, w: 0.9238797}
+  m_LocalPosition: {x: 344.4, y: 30.2, z: 437}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+--- !u!114 &2253064892943908138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4564732928849171407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eefadcac6606bc84dac9314abeedd338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forecastProfile: {fileID: 11400000, guid: 8a6296a55ec94494fa4791955335bbcc, type: 2}
+  weatherSelectionMode: 0
+  currentForecast: []
+  weatherTransitionTime: 5
+  weatherTimer: 0
+  weatherSphere: {fileID: 0}
+  weight: 0
+  climateProfile: {fileID: 11400000, guid: 92b2d06ba4ba3c947b69441e32539403, type: 2}
+  localTemperatureFilter: 0
+  localPrecipitationFilter: 0
+  currentTemperature: 30.15355
+  currentTemperatureCelsius: -1.025806
+  currentPrecipitation: 50.71065
+  currentWeather: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
+  weatherChangeCheck: {fileID: 0}
+  weightedWeatherProfiles:
+  - weight: 1
+    profile: {fileID: 11400000, guid: ae94c1a397a01e442a11e8b23ebb1cef, type: 2}
+    transitioning: 1
+  bounds:
+  - {x: 0, y: 0, z: -29.5}
+  - {x: 74.5, y: 0, z: -34.8}
+  - {x: 80.1, y: 0, z: 18.1}
+  - {x: 15.9, y: 0, z: 104.5}
+  - {x: -38.3, y: 0, z: 61.4}
+  height: 74.94
+  transitionDistance: 20
+  displayColor: {r: 1, g: 1, b: 1, a: 1}
