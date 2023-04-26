@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class MainZombieScript : MonoBehaviour
 {
@@ -8,7 +11,18 @@ public class MainZombieScript : MonoBehaviour
     //public GameObject handRight;
     //public float speedCAR;
     //public bool jump;
+    public Image killImage;
+    private float killSec;
 
+    public AudioSource hitAudio;
+    public AudioClip hitClip;
+    public bool boolAudio;
+    public float secHit;
+   
+
+    public VisualEffect bloodVisual;
+
+    public GameObject ZombieEmpty;
     // ----------------------------------------------------------------------
     public Animator animator;
 
@@ -43,6 +57,9 @@ public class MainZombieScript : MonoBehaviour
  
     void Start()
     {
+        killImage.gameObject.SetActive(false);
+        bloodVisual.GetComponent<VisualEffect>().enabled = true;
+
         slizatorActiv = 0;
         healthZombie = 100f;
 
@@ -77,6 +94,7 @@ public class MainZombieScript : MonoBehaviour
                     {
                         Hips.transform.parent = null;
                         transform.position = Hips.transform.position;
+                        ZombieEmpty.transform.position = Hips.transform.position;
                         second += Time.deltaTime;
                     }
                 }
@@ -90,6 +108,7 @@ public class MainZombieScript : MonoBehaviour
         //}
         if (second >= 5)
         {
+            
             if (healthZombie > 0)
             {
                 MakePhysicalUp();
@@ -98,6 +117,20 @@ public class MainZombieScript : MonoBehaviour
         // - Взаимодействие с Оружием -----------------------------------------
         if (mainGun == true)
         {
+            if (boolAudio == true)
+            {
+                if (secHit <= 0.2)
+                {
+                    secHit += Time.deltaTime;
+                }
+                if (secHit >= 0.2)
+                {
+                    hitAudio.PlayOneShot(hitClip);
+                    boolAudio = false;
+                    secHit = 0;
+
+                }
+            }
             if (PlayerPrefs.HasKey("slizator_true"))
             {
                 slizatorActiv = PlayerPrefs.GetInt("slizator_true");
@@ -110,11 +143,28 @@ public class MainZombieScript : MonoBehaviour
             {
                 if (Input.GetMouseButton(1))
                 {
-                    Sslizator();
+                    if (slizClone)
+                    {
+
+                        Sslizator();
+                    }
+                    
+                    
                 }
             }
             if (RigActivity == true)
             {
+                if(killSec <= 1)
+                {
+                    killImage.gameObject.SetActive(true);
+                    killSec += Time.deltaTime;
+                }
+                if(killSec >= 1)
+                {
+                    killImage.gameObject.SetActive(false);
+                }
+
+                
                 MakePhysical();
                 if (slizPickup == 1)
                 {
@@ -133,13 +183,18 @@ public class MainZombieScript : MonoBehaviour
 
             if (hitGunActiv == true)
             {
-                if (secund <= 0.5)
+                
+                if (secund <= 0.7)
                 {
+                    
                     secund += Time.deltaTime;
                 }
                 HitGun();
-                if (secund >= 0.5)
+                
+                if (secund >= 0.7)
                 {
+                    
+                    bloodVisual.GetComponent<VisualEffect>().enabled = false;
                     secund = 0;
                     hitGunActiv = false;
                 }
@@ -151,6 +206,7 @@ public class MainZombieScript : MonoBehaviour
                 HitGunFalse();
                 return;
             }
+            
         }    
     }
 
@@ -160,8 +216,10 @@ public class MainZombieScript : MonoBehaviour
         
         if (healthZombie <= 0)
         {
+            
             if (MainZombie.CompareTag("Zombie_yellow"))
             {
+                
                 KnopkaR = 1;
                 PlayerPrefs.SetInt("KnopkaR", KnopkaR);
 
@@ -182,6 +240,8 @@ public class MainZombieScript : MonoBehaviour
         }
         if (other.gameObject.tag == "Last")
         {
+            boolAudio = true;
+            bloodVisual.GetComponent<VisualEffect>().enabled = true;
             mainGun = true;
             hitGunActiv = true;
             return;
@@ -222,11 +282,11 @@ public class MainZombieScript : MonoBehaviour
     public void MakePhysicalUp()
     {
         Hips.transform.SetParent(Armature.transform);
-
+        
         animator.enabled = true;
         animator.SetTrigger("Idle");
         animator.SetInteger("Stand", 1);
-        gameObject.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        
         RigActivity = false;
         second = 0;
 
@@ -234,6 +294,7 @@ public class MainZombieScript : MonoBehaviour
         {
             ZombRigitAll[i].isKinematic = true;
         }
+        gameObject.transform.position = new Vector3(ZombieEmpty.transform.position.x, 0, transform.position.z);
     }
 
     public void Sslizator()
@@ -257,6 +318,7 @@ public class MainZombieScript : MonoBehaviour
     void Die_Slizz()
     {
         Destroy(slizClone);
+       
     }
     void Die()
     {
@@ -266,6 +328,7 @@ public class MainZombieScript : MonoBehaviour
     public void HitGun()
     {
         animator.SetInteger("HitGun", 1);
+        
     }
 
     public void HitGunFalse()

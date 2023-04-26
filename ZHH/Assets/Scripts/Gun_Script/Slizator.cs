@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Slizator : MonoBehaviour
-{    
+{
+    public GunOptionsMain GunOptionsMain;
     
     public Text sliz_yellow_text;
     
@@ -26,9 +27,7 @@ public class Slizator : MonoBehaviour
     public Material slizator_mat_9;
     public Material slizator_mat_10;
 
-    [SerializeField]
-    public GameObject Slizator_Gun;
-    public GameObject Gun_Avtomat;
+    
 
     public int sliz_yellow_main;
     private int sliz_green_main;
@@ -36,9 +35,7 @@ public class Slizator : MonoBehaviour
 
     public void Start()
     {
-        
-        Slizator_Gun.SetActive(false);
-        Gun_Avtomat.SetActive(true);
+       
         slizat_part.Stop();
         slizator_true = 0;
         PlayerPrefs.SetInt("slizator_true", slizator_true);
@@ -60,17 +57,13 @@ public class Slizator : MonoBehaviour
             sliz_yellow_main = PlayerPrefs.GetInt("sliz_yellow");
         }
         sliz_yellow_text.text = sliz_yellow_main.ToString();
-        if (Input.GetKey(KeyCode.R))
-        {          
-            Slizator_Gun.SetActive(true);
-            Gun_Avtomat.SetActive(false);
+        if (GunOptionsMain.gunSlizator == true)
+        {                    
             slizator_true = 1;
             PlayerPrefs.SetInt("slizator_true", slizator_true);
         }
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            Gun_Avtomat.SetActive(true);
-            Slizator_Gun.SetActive(false);
+        if (GunOptionsMain.gunAvtomat == true)
+        {          
             slizator_true = 2;
         }
         if (slizator_true == 1)

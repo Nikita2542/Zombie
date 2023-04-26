@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6043523725261270836}
   - component: {fileID: 2184498638307314004}
   - component: {fileID: 8745355247593287132}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4897,7 +4897,7 @@ GameObject:
   - component: {fileID: 7894954191839040038}
   - component: {fileID: 7894954191839040036}
   - component: {fileID: 7894954191839040039}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9785,7 +9785,7 @@ GameObject:
   - component: {fileID: 8895280995572817909}
   - component: {fileID: -4207593065043900491}
   - component: {fileID: 999056315132284235}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Last_Target 1
   m_TagString: Last
   m_Icon: {fileID: 0}
@@ -9867,7 +9867,7 @@ GameObject:
   - component: {fileID: 3432682860378243110}
   - component: {fileID: 124792203478969934}
   - component: {fileID: 7204320181741050223}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}

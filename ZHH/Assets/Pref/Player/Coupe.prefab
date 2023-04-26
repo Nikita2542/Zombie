@@ -4894,7 +4894,6 @@ GameObject:
   - component: {fileID: 5208703912727388365}
   - component: {fileID: 3580585360572455345}
   - component: {fileID: 4602482028625826584}
-  - component: {fileID: 5508972989575870600}
   m_Layer: 8
   m_Name: Game_Gun (1)
   m_TagString: Untagged
@@ -4930,8 +4929,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f108769daf5f67429314d6ade1eab9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shotAudio: {fileID: 0}
+  shotClip: {fileID: 0}
+  playerCamera: {fileID: 0}
+  verticalRecoil: 0
   damage_gun: 5
-  range_gun: 100
   fireRate: 15
   Last_TargetForce: 40
   Gun_Camera: {fileID: 2242431962406679524}
@@ -4955,33 +4957,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun_obj: {fileID: 5015240847853765221}
   cam_target: {fileID: 0}
---- !u!114 &5508972989575870600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 344818110018768071}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d05cc59d6d8cf544836d37dcf398802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliz_yellow_text: {fileID: 0}
-  sliz_green_text: {fileID: 0}
-  slizat_part: {fileID: 0}
-  slizator_mat_1: {fileID: 0}
-  slizator_mat_2: {fileID: 0}
-  slizator_mat_3: {fileID: 0}
-  slizator_mat_4: {fileID: 0}
-  slizator_mat_5: {fileID: 0}
-  slizator_mat_6: {fileID: 0}
-  slizator_mat_7: {fileID: 0}
-  slizator_mat_8: {fileID: 0}
-  slizator_mat_9: {fileID: 0}
-  slizator_mat_10: {fileID: 0}
-  Slizator_Gun: {fileID: 0}
-  Gun_Avtomat: {fileID: 0}
 --- !u!1 &440304916619059221
 GameObject:
   m_ObjectHideFlags: 0
@@ -10065,7 +10040,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliz_yellow_text: {fileID: 0}
-  sliz_green_text: {fileID: 0}
   slizat_part: {fileID: 828068130186345975}
   slizator_mat_1: {fileID: 2100000, guid: 015f0d470fb35be4ba96eb0702ee3ba5, type: 2}
   slizator_mat_2: {fileID: 2100000, guid: e699cfc78c946b54884a650e3d3bb75c, type: 2}
@@ -10079,6 +10053,7 @@ MonoBehaviour:
   slizator_mat_10: {fileID: 2100000, guid: 7624e0f3853562340b88b429fb14f65a, type: 2}
   Slizator_Gun: {fileID: 4183436873038932606}
   Gun_Avtomat: {fileID: 344818110018768071}
+  sliz_yellow_main: 0
 --- !u!1 &1371663331509402063
 GameObject:
   m_ObjectHideFlags: 0
@@ -10634,9 +10609,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 8468874475232354863}
+  speedCAR: 0
   maxSpeed: 0
   speedLabel: {fileID: 0}
-  speed_CAR: 0
 --- !u!1 &2039269267880243118
 GameObject:
   m_ObjectHideFlags: 0

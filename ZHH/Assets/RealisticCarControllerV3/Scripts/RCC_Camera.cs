@@ -206,7 +206,7 @@ public class RCC_Camera : MonoBehaviour {
     public float maximumScroll = 5f;        //  Maximum distance for the zoom.
 
     // Raw Orbit X and Y inputs.
-    private float orbitX, orbitY = 0f;
+    public float orbitX, orbitY = 0f;
 
     // Smooth Orbit X and Y inputs.
     private float orbitX_Smoothed, orbitY_Smoothed = 0f;
@@ -464,8 +464,8 @@ public class RCC_Camera : MonoBehaviour {
         RCC_Inputs inputs = RCC_InputManager.Instance.inputs;
 
         //  Setting orbits.
-        orbitX += inputs.orbitX;
-        orbitY -= inputs.orbitY;
+        orbitX += inputs.orbitX / orbitXSpeed;
+        orbitY -= inputs.orbitY / orbitYSpeed;
 
         // Clamping orbit Y.
         orbitY = Mathf.Clamp(orbitY, minOrbitY, maxOrbitY);
