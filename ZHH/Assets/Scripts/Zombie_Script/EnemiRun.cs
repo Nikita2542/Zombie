@@ -25,14 +25,11 @@ public class EnemiRun : MonoBehaviour
     public void Start()
     {
         Player_Health = 100;
-        PlayerPrefs.SetInt("PlayerHealth", Player_Health);
+        
     }
     public void Update()
     {
-        if (PlayerPrefs.HasKey("PlayerHealth"))
-        {
-            Player_Health = PlayerPrefs.GetInt("PlayerHealth");
-        }
+        
         if (transform.position == homee.transform.position)
         {
             zomb_animation.SetInteger("Run", 4);          
@@ -72,7 +69,7 @@ public class EnemiRun : MonoBehaviour
         {
             SecundomerTime = 0;
             Player_Health -= 5;
-            PlayerPrefs.SetInt("PlayerHealth", Player_Health);
+            
         }
         
         Enemy_RayCast();

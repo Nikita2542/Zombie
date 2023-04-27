@@ -2,73 +2,97 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
 public class MainZombieScript : MonoBehaviour
 {
-    //public GameObject clingsRight;
-    //public GameObject handRight;
-    //public float speedCAR;
-    //public bool jump;
-
-    
-    public GunOptionsMain GunOptions;
-
-    SkinnedMeshRenderer skinnedMeshRenderer;
-    public float dieForce;
-    public float blinkIntensity;
-    public float blinkDuration;
-    float blinkTimer;
-
-    public Image killImage;
-    private float killSec;
-
-    public Vector3 directionOn;
-
-    public AudioSource hitAudio;
-    public AudioClip hitClip;
-    public bool boolAudio;
-    public float secHit;
-   
-
-    public VisualEffect bloodVisual;
-    UIHealthBar healthBar;
-
-    public GameObject ZombieEmpty;
-    // ----------------------------------------------------------------------
-    Animator animator;
 
     public float healthZombie;
-    public float maxHealth;
-    private float secund;
-    private float secundDead;
-    private float second;
+    public GunOptionsMain GunOptions;
 
-    
+    UIHealthBar healthBar;
 
-    public GameObject slizPrefab;
-    public GameObject targetGun;
+    //- Õ¿—“–Œ… ¿ »√–Œ¬€’ Œ¡⁄≈ “Œ¬ --------------------------------------------------------/
+
+    public GameOption gameOption;
+    [System.Serializable]
+    public class GameOption
+    {
+        public GameObject ZombieEmpty;
+        public GameObject slizPrefab;
+        public GameObject targetGun;
+        public GameObject YakuZombie;
+        public GameObject Hips;
+        public GameObject Armature;
+
+
+    }
+
     private GameObject MainZombie;
-    public GameObject YakuZombie;
     private GameObject slizClone;
-    public GameObject Hips;
-    public GameObject Armature;
 
-    private bool hitGunActiv;
-    public bool RigActivity;
+    //- Õ¿—“–Œ… ¿ Œ¡⁄≈ “Œ¬ ----------------------------------------------------------------/
 
-    public bool mainCar;
-    public bool mainGun;
+    public ObjectScene objectScene;
+    [System.Serializable]
+    public class ObjectScene
+    {
+        public Image killImage;
+        public AudioSource hitAudio;
+        public AudioClip hitClip;
+        public VisualEffect bloodVisual;
+    }
+
+    Animator animator;
+
+    //- Õ¿—“–Œ… ¿ ¡À» ¿ -------------------------------------------------------------------/
+
+    public OptionBlink optionBlink;
+    [System.Serializable]
+    public class OptionBlink
+    {
+
+        public float blinkIntensity;
+        public float blinkDuration;
+        public float blinkTimer;
+
+    }
+
+    SkinnedMeshRenderer skinnedMeshRenderer;
+
+    //- œ–»¬¿“ ”◊¿—“Œ  -------------------------------------------------------------------/
 
     private int slizYellow;
     private int slizPickup;
-    private int slizSpeed = 30;   
-    public int slizatorActiv;
+    private int slizSpeed = 30;
     private int KnopkaR;
 
+    private int slizatorActiv;
+
+
+    private bool hitGunActiv;
+    private bool boolAudio;
+    private bool RigActivity;
+    private bool mainCar;
+    private bool mainGun;
+
+
+    private float killSec;
+    private float secund;
+    private float secundDead;
+    private float second;
+    private float secHit;
+    private float maxHealth;
+
+    //- ◊¿—“» “≈À¿ «Œ¡Ã» -----------------------------------------------------------------/
+
     public Rigidbody[] ZombRigitAll;
- 
+
+
+
+    //- START -------------------------------------------------------------------------------------------------------------/
     void Start()
     {
         
@@ -77,8 +101,8 @@ public class MainZombieScript : MonoBehaviour
         animator = GetComponent<Animator>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         healthBar = GetComponentInChildren<UIHealthBar>();
-        killImage.gameObject.SetActive(false);
-        bloodVisual.GetComponent<VisualEffect>().enabled = false;
+        objectScene.killImage.gameObject.SetActive(false);
+        objectScene.bloodVisual.GetComponent<VisualEffect>().enabled = false;
 
         
         maxHealth = 100f;
@@ -89,48 +113,29 @@ public class MainZombieScript : MonoBehaviour
         mainGun = false;
     }
     
+    
+    //- UPDATE ------------------------------------------------------------------------------------------------------------/
     void Update()
     {
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intensity = (lerp * blinkIntensity) + 1.0f;
-        skinnedMeshRenderer.material.color = Color.white * intensity;
-       // - ¬Á‡ËÏÓ‰ÂÈÒÚ‚ËÂ Ò Ï‡¯ËÌÓÈ -----------------------------------------
+        ScinBlink();
+
+        // - ¬Á‡ËÏÓ‰ÂÈÒÚ‚ËÂ Ò Ï‡¯ËÌÓÈ -
+
         if (mainCar == true)
         {
-            //if (PlayerPrefs.HasKey("speedCAR"))
-            //{
-            //    speedCAR = PlayerPrefs.GetFloat("speedCAR");
-            //}
-            //if(speedCAR <= 40)
-            //{
-                
-            //    // - ÃÂÚÓ‰ Ô˚„‡ÂÚ Ì‡ Ï‡¯ËÌÛ
-            //    JumpAttack();
-
-            //}
-            //if(speedCAR >= 40)
-            //{             
-                if (RigActivity == true)
+            if (RigActivity == true)
+            {
+                // - ÃÂÚÓ‰ ÓÚÍÎ˛˜‡ÂÚ ‡ÌËÏ‡ˆË˛ -
+                MakePhysical();
+                if (second < 5)
                 {
-                    // - ÃÂÚÓ‰ ÓÚÍÎ˛˜‡ÂÚ ‡ÌËÏ‡ˆË˛ 
-                    MakePhysical(directionOn);
-                    if (second < 5)
-                    {
-                        Hips.transform.parent = null;
-                        transform.position = Hips.transform.position;
-                        ZombieEmpty.transform.position = Hips.transform.position;
-                        second += Time.deltaTime;
-                    }
+                    gameOption.Hips.transform.parent = null;
+                    transform.position = gameOption.Hips.transform.position;
+                    gameOption.ZombieEmpty.transform.position = gameOption.Hips.transform.position;
+                    second += Time.deltaTime;
                 }
-            //}
-            
-            
-        }
-        //if (jump == true)
-        //{
-        //    JumpAttackNo();
-        //}
+            }
+        }        
         if (second >= 5)
         {
             
@@ -139,7 +144,9 @@ public class MainZombieScript : MonoBehaviour
                 MakePhysicalUp();
             }
         }
-        // - ¬Á‡ËÏÓ‰ÂÈÒÚ‚ËÂ Ò ŒÛÊËÂÏ -----------------------------------------
+
+        // - ¬Á‡ËÏÓ‰ÂÈÒÚ‚ËÂ Ò ŒÛÊËÂÏ -
+
         if (mainGun == true)
         {
             if (boolAudio == true)
@@ -150,7 +157,7 @@ public class MainZombieScript : MonoBehaviour
                 }
                 if (secHit >= 0.2)
                 {
-                    hitAudio.PlayOneShot(hitClip);
+                    objectScene.hitAudio.PlayOneShot(objectScene.hitClip);
                     boolAudio = false;
                     secHit = 0;
 
@@ -182,17 +189,17 @@ public class MainZombieScript : MonoBehaviour
             {
                 if(killSec <= 1)
                 {
-                    killImage.gameObject.SetActive(true);
+                    objectScene.killImage.gameObject.SetActive(true);
                     killSec += Time.deltaTime;
                 }
                 if(killSec >= 1)
                 {
-                    killImage.gameObject.SetActive(false);
+                    objectScene.killImage.gameObject.SetActive(false);
                     
                 }
 
                 
-                MakePhysical(directionOn);
+                MakePhysical();
                 if (slizPickup == 1)
                 {
                     if (secundDead < 10)
@@ -220,8 +227,8 @@ public class MainZombieScript : MonoBehaviour
                 
                 if (secund >= 0.7)
                 {
-                    
-                    bloodVisual.GetComponent<VisualEffect>().enabled = false;
+
+                    objectScene.bloodVisual.GetComponent<VisualEffect>().enabled = false;
                     secund = 0;
                     hitGunActiv = false;
                 }
@@ -237,6 +244,9 @@ public class MainZombieScript : MonoBehaviour
         }    
     }
 
+
+
+    // - Õ¿ÕŒ—»“ ”–ŒÕ --------------------------------------------------------------*TAKeDAMAGE_GUN*-----------------------/
     public void TakeDamage_gun(float amount)
     {
         healthZombie -= amount;      
@@ -250,22 +260,19 @@ public class MainZombieScript : MonoBehaviour
                 KnopkaR = 1;
                 PlayerPrefs.SetInt("KnopkaR", KnopkaR);
 
-                slizClone = Instantiate(slizPrefab, YakuZombie.transform.position, Quaternion.Euler(90, 0, 0)) as GameObject;
+                slizClone = Instantiate(gameOption.slizPrefab, gameOption.YakuZombie.transform.position, Quaternion.Euler(90, 0, 0)) as GameObject;
                 MainZombie.GetComponent<BoxCollider>().enabled = false;
 
                 RigActivity = true;
             }
         }
-        blinkTimer = blinkDuration;
+        optionBlink.blinkTimer = optionBlink.blinkDuration;
         
     }
 
-    public void ApplyForce(Vector3 force)
-    {
-        var rigidBody = animator.GetBoneTransform(HumanBodyBones.Hips).GetComponent<Rigidbody>();
-        rigidBody.AddForce(force, ForceMode.VelocityChange);
-    }
 
+
+    // -  ŒÀÀ¿…ƒ≈– - œ–Œ¬≈– ¿ Õ¿ ¬’Œƒ  ----------------------------------------------*OnTRIGErENTER*-----------------------/
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -276,13 +283,13 @@ public class MainZombieScript : MonoBehaviour
         if (other.gameObject.tag == "Last")
         {
             boolAudio = true;
-            bloodVisual.GetComponent<VisualEffect>().enabled = true;
+            objectScene.bloodVisual.GetComponent<VisualEffect>().enabled = true;// true
             mainGun = true;
             hitGunActiv = true;
             return;
         }
     }
-    
+    // -  ŒÀÀ¿…ƒ≈– - œ–Œ¬≈– ¿ Õ¿ ¬€’Œƒ  ----------------------------------------------*OnTRIGErEXIT*-----------------------/
     public void OnTriggerExit(Collider other)
     {
         
@@ -293,6 +300,9 @@ public class MainZombieScript : MonoBehaviour
         }
     }
 
+
+
+    // - ◊¿—“» “≈À¿ - Œ¡ÕŒ¬À≈Õ»≈ ---------------------------------------------------------*AWAKE*--------------------------/
     private void Awake()
     {
         for (int i = 0; i < ZombRigitAll.Length; i++)
@@ -301,10 +311,23 @@ public class MainZombieScript : MonoBehaviour
         }
     }
 
-    public void MakePhysical(Vector3 directionOn)
+
+
+    // - »«À”◊≈Õ»≈ ¬Œ ¬–≈Ãﬂ œŒœ¿ƒ¿Õ»ﬂ - Œ¡ÕŒ¬À≈Õ»≈ -------------------------------------*SCInBLINK*------------------------/
+    public void ScinBlink()
     {
-        directionOn.y = 1;
-        ApplyForce(directionOn * dieForce);
+        optionBlink.blinkTimer -= Time.deltaTime;
+        float lerp = Mathf.Clamp01(optionBlink.blinkTimer / optionBlink.blinkDuration);
+        float intensity = (lerp * optionBlink.blinkIntensity) + 1.0f;
+        skinnedMeshRenderer.material.color = Color.white * intensity;
+    }
+
+
+
+    // - ¬ Àﬁ◊≈Õ»≈ RAGDOL - œ¿ƒ≈Õ»≈ «ŒÃ¡» ---------------------------------------------*MAKePHYSICAL*----------------------/
+    public void MakePhysical()
+    {
+              
         animator.enabled = false;
         healthBar.gameObject.SetActive(false);
 
@@ -314,13 +337,10 @@ public class MainZombieScript : MonoBehaviour
         }
 
     }
-
-    
-    
-
+    // - ¬€ Àﬁ◊≈Õ»≈ RAGDOL - «ŒÃ¡» ¬—“¿≈“ ---------------------------------------------*MAKePHYSICALUP*--------------------/
     public void MakePhysicalUp()
     {
-        Hips.transform.SetParent(Armature.transform);
+        gameOption.Hips.transform.SetParent(gameOption.Armature.transform);
         healthBar.gameObject.SetActive(true);
         animator.enabled = true;
         animator.SetTrigger("Idle");
@@ -333,17 +353,20 @@ public class MainZombieScript : MonoBehaviour
         {
             ZombRigitAll[i].isKinematic = true;
         }
-        gameObject.transform.position = new Vector3(ZombieEmpty.transform.position.x, 0, transform.position.z);
+        gameObject.transform.position = new Vector3(gameOption.ZombieEmpty.transform.position.x, 0, transform.position.z);
     }
 
+
+
+    // - œŒƒ¡Œ– —À»«» -------------------------------------------------------------------*SSLIZATOR*-----------------------/
     public void Sslizator()
     {
-        slizClone.transform.position = Vector3.MoveTowards(slizClone.transform.position, targetGun.transform.position, Time.deltaTime * slizSpeed);
-        Vector3 direction = (targetGun.transform.position - slizClone.transform.position).normalized;
+        slizClone.transform.position = Vector3.MoveTowards(slizClone.transform.position, gameOption.targetGun.transform.position, Time.deltaTime * slizSpeed);
+        Vector3 direction = (gameOption.targetGun.transform.position - slizClone.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         slizClone.transform.rotation = Quaternion.Lerp(slizClone.transform.rotation, lookRotation, Time.deltaTime * slizSpeed);
 
-        if (slizClone.transform.position == targetGun.transform.position)
+        if (slizClone.transform.position == gameOption.targetGun.transform.position)
         {
             slizYellow++;
             slizPickup++;
@@ -354,35 +377,31 @@ public class MainZombieScript : MonoBehaviour
         }
     }
 
+
+
+    // - ”Õ»◊“Œ∆≈Õ»≈ —À»«» --------------------------------------------------------------*DIE_SLIZZ*-----------------------/
     void Die_Slizz()
     {
-        Destroy(slizClone);
-       
+        Destroy(slizClone);    
     }
+    // - ”Õ»◊“Œ∆≈Õ»≈ «ŒÃ¡» -----------------------------------------------------------------*DIE*--------------------------/
     void Die()
     {
         killSec = 0;
         Destroy(MainZombie.gameObject);
     }
 
+
+
+    // - ¿Õ»Ã¿÷»ﬂ - œŒœ¿ƒ¿Õ»≈ ¬ «ŒÃ¡» - »√–¿≈“ --------------------------------------------*HItGUN*------------------------/
     public void HitGun()
     {
         animator.SetInteger("HitGun", 1);
         
     }
-
+    // - ¿Õ»Ã¿÷»ﬂ - œŒœ¿ƒ¿Õ»≈ ¬ «ŒÃ¡» - ¬€ Àﬁ◊≈Õ¿ ---------------------------------------*HItGUnFALSE*---------------------/
     public void HitGunFalse()
     {
         animator.SetInteger("HitGun", 2);
     }
-    //public void JumpAttack()
-    //{
-        
-    //    animator.SetTrigger("JumpAttack");
-    //}
-    //public void JumpAttackNo()
-    //{
-        
-    //    animator.SetTrigger("JumpNo");
-    //}
 }

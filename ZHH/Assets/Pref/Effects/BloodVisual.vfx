@@ -3092,7 +3092,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":5.033322811126709,"g":4.35776424407959,"b":0.1317623406648636,"a":0.0}'
+      m_SerializableObject: '{"r":6.719881057739258,"g":0.0,"b":0.0650855153799057,"a":0.0}'
     m_Space: 2147483647
   m_Property:
     name: _Color
@@ -5617,7 +5617,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":16.353313446044923,"g":10.882652282714844,"b":0.42809709906578066,"a":0.0}'
+      m_SerializableObject: '{"r":21.83296012878418,"g":0.0,"b":0.0,"a":0.0}'
     m_Space: 2147483647
   m_Property:
     name: _Color
