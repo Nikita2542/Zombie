@@ -15,6 +15,9 @@ TagManager:
   - Lab
   - CameraLab
   - Last
+  - Yaku_zombie
+  - Armature
+  - Hips
   layers:
   - Default
   - TransparentFX

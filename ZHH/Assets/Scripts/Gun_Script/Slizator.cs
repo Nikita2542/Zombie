@@ -7,48 +7,37 @@ using UnityEngine.UI;
 
 public class Slizator : MonoBehaviour
 {
-    public GunOptionsMain GunOptionsMain;
+    GunOptionsMain GunOptionsMain;
     
     public Text sliz_yellow_text;
-    
-
-    [SerializeField]
+ 
     public ParticleSystem slizat_part;
-
-    [SerializeField]
-    public Material slizator_mat_1;
-    public Material slizator_mat_2;
-    public Material slizator_mat_3;
-    public Material slizator_mat_4;
-    public Material slizator_mat_5;
-    public Material slizator_mat_6;
-    public Material slizator_mat_7;
-    public Material slizator_mat_8;
-    public Material slizator_mat_9;
-    public Material slizator_mat_10;
-
-    
-
-    public int sliz_yellow_main;
+ 
+    private int sliz_yellow_main;
     private int sliz_green_main;
     private int slizator_true;
 
+    
+    public MaterialSlizator Material;
+    [System.Serializable]
+    public class MaterialSlizator
+    {
+        public Material[] matSlizator;
+    }
+
     public void Start()
     {
-       
+        
+        GunOptionsMain = GetComponentInParent<GunOptionsMain>();
         slizat_part.Stop();
         slizator_true = 0;
         PlayerPrefs.SetInt("slizator_true", slizator_true);
-        slizator_mat_1.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_2.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_3.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_4.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_5.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_6.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_7.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_8.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_9.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
-        slizator_mat_10.SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
+        Material.matSlizator[0].SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
+        for (int i = 0; i < Material.matSlizator.Length; i++)
+        {
+            Material.matSlizator[i].SetColor("_EmissionColor", new Color(255, 255, 255) / 200);
+        }
+        
     }
     public void Update()
     {
@@ -58,30 +47,38 @@ public class Slizator : MonoBehaviour
         }
         sliz_yellow_text.text = sliz_yellow_main.ToString();
         if (GunOptionsMain.gunSlizator == true)
-        {                    
+        {
+            if(Material.matSlizator.Length <= sliz_yellow_main)
+            {
+                for (int i = 0; i < Material.matSlizator.Length; i++)
+                {
+                    Material.matSlizator[i].SetColor("_EmissionColor", new Color(191, 81, 0) / 200);
+                }
+            }
+           
             slizator_true = 1;
             PlayerPrefs.SetInt("slizator_true", slizator_true);
-        }
-        if (GunOptionsMain.gunAvtomat == true)
-        {          
-            slizator_true = 2;
-        }
-        if (slizator_true == 1)
-        {
-            if (Input.GetMouseButtonUp(1))
-            {
-                slizat_part.Stop();
-            }
-            if (Input.GetMouseButtonDown(1))
-            {
-                slizat_part.Play();
-            }
-        }
 
-        if (PlayerPrefs.HasKey("slizator_true"))
-        {
-            slizator_true = PlayerPrefs.GetInt("slizator_true");
         }
+        else
+        {
+            slizator_true = 0;
+            PlayerPrefs.SetInt("slizator_true", slizator_true);
+        }
+        
+        //if (slizator_true == 1)
+        //{
+        //    if (Input.GetMouseButtonUp(1))
+        //    {
+        //        slizat_part.Stop();
+        //    }
+        //    if (Input.GetMouseButtonDown(1))
+        //    {
+        //        slizat_part.Play();
+        //    }
+        //}
+
+       
 
         
         if (PlayerPrefs.HasKey("sliz_green"))
@@ -96,25 +93,8 @@ public class Slizator : MonoBehaviour
 
         PlayerPrefs.Save();
         
-        if (sliz_yellow_main >= 1)
-        {
-            slizator_mat_6.SetColor("_EmissionColor", new Color(191, 81, 0) / 200);           
-        }
-        if (sliz_yellow_main >= 2)
-        {
-            slizator_mat_7.SetColor("_EmissionColor", new Color(191, 81, 0) / 200);            
-        }
-        if (sliz_yellow_main >= 3)
-        {
-            slizator_mat_8.SetColor("_EmissionColor", new Color(191, 81, 0) / 200);           
-        }
-        if (sliz_yellow_main >= 4)
-        {
-            slizator_mat_9.SetColor("_EmissionColor", new Color(191, 81, 0) / 200);            
-        }
-        if (sliz_yellow_main >= 5)
-        {
-            slizator_mat_10.SetColor("_EmissionColor", new Color(191, 81, 0) / 200);            
-        }      
+
+
     }
+   
 }

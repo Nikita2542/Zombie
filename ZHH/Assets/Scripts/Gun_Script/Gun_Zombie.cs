@@ -7,216 +7,308 @@ using Unity.VisualScripting;
 
 public class Gun_Zombie : MonoBehaviour
 {
-    public bool openGun;
-    public bool openScope;
+    // - Õ¿—“–Œ… ¿  ¿Ã≈–€ --------------------------------------------------------------------------------------------------------------
 
-    public Slider sliderSensitivityScoup;
-    public Slider sliderSensitivity;
+    public OptionGunAvtomat OptionCamera;
+    [System.Serializable]
+    public class OptionGunAvtomat
+    {
+        [Range(1, 5)] public float sensitivity = 1;
+        [Range(1, 20)] public float sensitivityScope = 1;
+        [Range(40, 120)] public float recoil;
+        [Range(20, 60)] public float recoilScoup;
+        [Range(20, 40)] public float zoom;
+        [Range(20, 40)] public float zoomScoup;
+        [Range(0, 7)] public float distans;
+        [Range(0, 2)] public float distansScoup;
 
-    public AudioSource shotAudio;
-    public AudioClip shotClip;
+        public bool openGun;
+        public bool openScope;
+    }
+
     
- // - Õ‡ÒÚÓÈÍ‡ ÓÛÊËˇ-------------------------------------------------
-    
-    public RCC_Camera playerCamera;
-  
-    [Range(1, 5)]
-    private float sensitivity = 1;
-    [Range(1, 20)]
-    public float sensitivityScope = 1;
-    [Range(40, 120)]
-    public float recoil;
-    [Range(20, 60)]
-    public float recoilScoup;
-    [Range(20, 40)]
-    public float zoom;
-    [Range(20, 40)]
-    public float zoomScoup;
-    [Range(0, 7)]
-    public float distans;
-    [Range(0, 7)]
-    public float distansScoup;
-    private float height;
 
-    // -------------------------------------------------------------------
-
-    [Range (0, 30)]
-    public int damage_gun = 20;   
-    private float range_gun;
-    [Range(0, 30)]
-    public float fireRate = 50f;
-    [Range(0, 30)]
-    public float Last_TargetForce = 40;
-    public Camera Gun_Camera;
-    public ParticleSystem muzzleFlash;
-    public GameObject Last_Target;
-    public GameObject Last_TargetGO;
-    public float nextTimeToFire = 0f;
-
-    public Animation anim_Gun;
     public Animation anim_Part;
 
-    public ParticleSystem nitro1;
-    public ParticleSystem nitro2;
+    public RCC_Camera playerCamera;
+    public Camera Gun_Camera;
 
+    // - Õ¿—“–Œ… ¿ Œ–”∆»ﬂ --------------------------------------------------------------------------------------------------------------
+
+    public OptionAvtomat OptionGun;
+    [System.Serializable]
+    public class OptionAvtomat
+    {
+        [Range(0, 30)] public float damage_gun = 20;
+        [Range(0, 30)] public float fireRate = 50f;
+        [Range(0, 1000)] public float Last_TargetForce = 40;
+
+        public int bullet;
+        public int bulletMax;
+        public float reloading;
+
+        public Slider sliderSensitivity;
+        public Slider sliderSensitivityScoup;
+
+        public Text textBullet;
+        public Text textBulletMax;
+    }
+    private float secReload;
+    private bool reload;
+
+    // - ƒ–”√Œ≈ ----------------------------------------------------------------------------------------------------------------------------------
+
+    public particle ParticalAll;
+    [System.Serializable]
+    public class particle
+    {
+        public ParticleSystem muzzleFlash;
+        public ParticleSystem nitro1;
+        public ParticleSystem nitro2;
+    }
+
+    private AudioSource shotAudio;
+    public AudioClip shotClip;
+
+    public GameObject prefabLastTarget;
+    private GameObject Last_TargetGO;
+
+    private float nextTimeToFire = 0f;
+    private float height;
+    private float range_gun;
+  
+    private Vector3 directionOn;
+    public Image imageReloading;
+
+    // - START -------------------------------------------------------------------------------------------------------------------------
     public void Start()
     {
-        openGun = true;
-        openScope = false;
+        imageReloading.gameObject.SetActive(false);
+        OptionGun.bullet = OptionGun.bulletMax;
+        OptionGun.textBulletMax.text = OptionGun.bulletMax.ToString();
+
+        OptionCamera.openGun = true;
+        OptionCamera.openScope = false;
+
+        shotAudio = GetComponent<AudioSource>();
+
+        // - «¿ƒ¿≈“ ƒ›‘ŒÀ“Õ€≈ Õ¿—“–Œ… »  ¿Ã≈–€ -
         ModedeDefault();
 
         if (PlayerPrefs.HasKey("damage_gun_sale"))
         {
-            
-            damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
+            OptionGun.damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
         }
     }
+    // - UPDATE GO ---------------------------------------------------------------------------------------------------------------------
     private void Update()
     {
-        if (Input.GetMouseButton(1))
+        OptionGun.textBullet.text  = OptionGun.bullet.ToString();
+        
+        // - œ≈–≈«¿–ﬂƒ ¿ - «¿ ŒÕ◊»À»—‹ œ”À» -
+        if (OptionGun.bullet <= 0)
         {
-            openScope = true;
-            openGun = false;
+            imageReloading.gameObject.SetActive(true);
+            imageReloading.fillAmount = 0;
+            reload = true;
+            if (secReload <= OptionGun.reloading)
+            {
+                secReload += Time.deltaTime;
+            }
+            if(secReload >= OptionGun.reloading)
+            {
+                OptionGun.bullet = OptionGun.bulletMax;
+                secReload = 0;
+            }
         }
         else
         {
-            openGun = true;
-            openScope = false;
+            reload = false;
+        }
+        
+        // - œ–Œ¬≈– ¿ —Œ—“ŒﬂÕ»ﬂ œ–»÷≈À¿ -
+
+        if (Input.GetMouseButton(1))
+        {
+            OptionCamera.openScope = true;
+            OptionCamera.openGun = false;
+        }
+        else
+        {
+            OptionCamera.openGun = true;
+            OptionCamera.openScope = false;
         }
 
-        if (openGun == true)
+        // - œ–»÷≈À¿ Õ≈¿ “»¬≈Õ -
+
+        if (OptionCamera.openGun == true)
         {
             SliderSensitivity();
             ModeOpenGun();
 
-            if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
-            {
-                playerCamera.TPSMinimumFOV = recoil;
+            // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
 
-                shotAudio.PlayOneShot(shotClip);
-                nextTimeToFire = Time.time + 1f / fireRate;
-                Shoot();
-            }
-            if (Input.GetMouseButtonDown(0))
+            if (reload == false)
             {
-                playerCamera.TPSMinimumFOV = recoil;
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                playerCamera.TPSMinimumFOV = zoom;
-            }
+                if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+                {
+                    OptionGun.bullet = OptionGun.bullet - 1;
+                    playerCamera.TPSMinimumFOV = OptionCamera.recoil;
 
+                    shotAudio.PlayOneShot(shotClip);
+                    nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
+                    Shoot();
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    playerCamera.TPSMinimumFOV = OptionCamera.recoil;
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    playerCamera.TPSMinimumFOV = OptionCamera.zoom;
+                }
+            }
         }
 
-        if(openScope == true)
+        // - œ–»÷≈À¿ ¿ “»¬≈Õ -
+
+        if (OptionCamera.openScope == true)
         {
             playerCamera.TPSHeight = height;
             SliderSensitivityScoup();
             ModeOpenScope();
 
-            if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
-            {
-                playerCamera.TPSMinimumFOV = recoilScoup;
+            // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
 
-                shotAudio.PlayOneShot(shotClip);
-                nextTimeToFire = Time.time + 1f / fireRate;
-                Shoot();
-            }
-            if (Input.GetMouseButtonDown(0))
+            if (reload == false)
             {
-                playerCamera.TPSMinimumFOV = recoilScoup;
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                playerCamera.TPSMinimumFOV = zoomScoup;
-            }
+                if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+                {
+                    OptionGun.bullet = OptionGun.bullet - 1;
+                    playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
+
+                    shotAudio.PlayOneShot(shotClip);
+                    nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
+                    Shoot();
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    playerCamera.TPSMinimumFOV = OptionCamera.zoomScoup;
+                }
+           }
+               
         }
-       
+
+        // - ƒŒ–¿¡Œ¿“‹ ›‘‘≈ “ ”— Œ–≈Õ»ﬂ ¿¬“ŒÃŒ¡»Àﬂ -
+
         if (Input.GetKey(KeyCode.F))
         {
-            nitro1.Play();
-            nitro2.Play();
+            ParticalAll.nitro1.Play();
+            ParticalAll.nitro2.Play();
         }
-        PlayerPrefs.SetInt("damage_gun", damage_gun);
+
+        // - Œ“ƒ¿≈“ DAMAGE - —Œ’–¿Õ≈Õ»≈ -
+
+        PlayerPrefs.SetFloat("damage_gun", OptionGun.damage_gun);
     }
+
+
+    // - œ–Œ¬≈– ¿ Õ¿ œŒœ¿ƒ¿Õ»≈ ¬ œ–Œ“»¬Õ» ¿ ------------------------------------* SHOOT() *--------------------------------------------
+    void Shoot()
+    {
+        //anim_Gun.Play();// - ¿Õ»Ã¿÷»ﬂ œ”ÿ » - Œ“ƒ¿◊¿ -
+
+        anim_Part.Play(); // - ¬€À≈“¿≈“ œ”Àﬂ -
+
+        ParticalAll.muzzleFlash.Play(); // - ›‘‘≈ “ ¬€—“–≈À¿ -
+        
+        if (Physics.Raycast(Gun_Camera.transform.position, Gun_Camera.transform.forward, out RaycastHit hit_gun, range_gun = 100f))
+        {
+
+            if (PlayerPrefs.HasKey("damage_gun_sale"))
+            {
+                OptionGun.damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
+            }
+            Debug.Log(hit_gun.transform.name);
+           
+            
+
+            if (hit_gun.transform.TryGetComponent<MainZombieScript>(out var MainZombieScript))
+            {
+                // - ¬Œ«¬–¿Ÿ¿≈“ DAMAGE   œ–Œ“»¬Õ» ” -
+                MainZombieScript.TakeDamage_gun(OptionGun.damage_gun);
+            }
+            if (hit_gun.rigidbody != null)
+            {
+                // - —»À¿ œ¿“–ŒÕ¿   Œ¡‹≈ “¿Ã -
+                hit_gun.rigidbody.AddForce(-hit_gun.normal * OptionGun.Last_TargetForce);
+            }
+            if (prefabLastTarget != null)
+            {
+                // - œŒ—À≈ƒÕ»≈ œŒœ¿ƒ¿Õ»≈ - ›‘‘≈ “ -
+                Last_TargetGO = Instantiate(prefabLastTarget, hit_gun.point, Quaternion.LookRotation(hit_gun.normal));
+            }
+
+            Destroy(Last_TargetGO.gameObject, 0.1f);
+        }
+
+    }
+
+    // - ƒ›‘ŒÀ“Õ€≈ Õ¿—“–Œ… »  ¿Ã≈–€ ----------------------------------------------------------*MODeDEFAULT*---------------------------------------- 
     public void ModedeDefault()
     {
-        zoom = 40;
-        distans = 6;
+        OptionCamera.zoom = 40;
+        OptionCamera.distans = 6;
 
-        zoomScoup = 20;
-        distansScoup = 1f;
+        OptionCamera.zoomScoup = 20;
+        OptionCamera.distansScoup = 1f;
 
         height = 1.08f;
 
-        sliderSensitivityScoup.value = sensitivityScope;
-        sliderSensitivity.value = sensitivity;
+        OptionGun.sliderSensitivityScoup.value = OptionCamera.sensitivityScope;
+        OptionGun.sliderSensitivity.value = OptionCamera.sensitivity;
         playerCamera.TPSHeight = height;
     }
+
+    // - Õ¿—“–Œ… »  ¿Ã≈–€ - Œ–”∆»≈ -----------------------------------------------------------*MODeOPEnGUN*-------------------------------- 
     public void ModeOpenGun()
     {
         playerCamera.minOrbitY = -15f;
         playerCamera.maxOrbitY = 70f;
 
-        playerCamera.orbitYSpeed = sensitivity;
-        playerCamera.orbitXSpeed = sensitivity;
+        playerCamera.orbitYSpeed = OptionCamera.sensitivity;
+        playerCamera.orbitXSpeed = OptionCamera.sensitivity;
 
-        playerCamera.TPSMinimumFOV = zoom;
-        playerCamera.TPSDistance = distans;
+        playerCamera.TPSMinimumFOV = OptionCamera.zoom;
+        playerCamera.TPSDistance = OptionCamera.distans;
     }
+
+    // - Õ¿—“–Œ… »  ¿Ã≈–€ - œ–»÷≈À -----------------------------------------------------------*MODeOPEnSCOPE*-------------------------------------------- 
     public void ModeOpenScope()
     {
         playerCamera.minOrbitY = -5f;
         playerCamera.maxOrbitY = 1.5f;
 
-        playerCamera.orbitYSpeed = sensitivityScope;
-        playerCamera.orbitXSpeed = sensitivityScope;
+        playerCamera.orbitYSpeed = OptionCamera.sensitivityScope;
+        playerCamera.orbitXSpeed = OptionCamera.sensitivityScope;
         
-        playerCamera.TPSMinimumFOV = zoomScoup;
-        playerCamera.TPSDistance = distansScoup;        
+        playerCamera.TPSMinimumFOV = OptionCamera.zoomScoup;
+        playerCamera.TPSDistance = OptionCamera.distansScoup;        
     }
     
-   
+    // - Õ¿—“–Œ… » ◊”¬—“¬»“≈À‹ÕŒ—“» ¬ »√–≈ ------------------------------------------------*SLIDErSENSITIVITySCOUP*--------------------
     public void SliderSensitivityScoup()
     {
-        sensitivityScope = sliderSensitivityScoup.value;
+        OptionCamera.sensitivityScope = OptionGun.sliderSensitivityScoup.value;
     }
     public void SliderSensitivity()
     {
-        sensitivity = sliderSensitivity.value;
+        OptionCamera.sensitivity = OptionGun.sliderSensitivity.value;
     }
-    void Shoot()
-    {
-        anim_Gun.Play();
-        anim_Part.Play();
-        muzzleFlash.Play();
-        if (Physics.Raycast(Gun_Camera.transform.position, Gun_Camera.transform.forward, out RaycastHit hit_gun, range_gun = 100f))
-        {
-            
-            if (PlayerPrefs.HasKey("damage_gun_sale"))
-            {
-                damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
-            }
-            Debug.Log(hit_gun.transform.name);
-            if (hit_gun.transform.TryGetComponent<MainZombieScript>(out var MainZombieScript))
-            {
-                MainZombieScript.TakeDamage_gun(damage_gun);
-            }
-            if (hit_gun.transform.TryGetComponent<ZombEnemyGreen>(out var zombie_en))
-            {
-                zombie_en.TakeDamage_gun(damage_gun);
-            }
-            if(hit_gun.rigidbody != null)
-            {
-                hit_gun.rigidbody.AddForce(-hit_gun.normal * Last_TargetForce);
-            }
-            if(Last_Target != null)
-            {
-                Last_TargetGO = Instantiate(Last_Target, hit_gun.point, Quaternion.LookRotation(hit_gun.normal));
-            }
-            
-            
-        }
-        Destroy(Last_TargetGO.gameObject, 0.1f);
-    }
+
+    // - END ----------------------------------------------------------------------------------------------------------------------------
 }

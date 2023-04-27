@@ -11,8 +11,20 @@ public class MainZombieScript : MonoBehaviour
     //public GameObject handRight;
     //public float speedCAR;
     //public bool jump;
+
+    
+    public GunOptionsMain GunOptions;
+
+    SkinnedMeshRenderer skinnedMeshRenderer;
+    public float dieForce;
+    public float blinkIntensity;
+    public float blinkDuration;
+    float blinkTimer;
+
     public Image killImage;
     private float killSec;
+
+    public Vector3 directionOn;
 
     public AudioSource hitAudio;
     public AudioClip hitClip;
@@ -21,12 +33,14 @@ public class MainZombieScript : MonoBehaviour
    
 
     public VisualEffect bloodVisual;
+    UIHealthBar healthBar;
 
     public GameObject ZombieEmpty;
     // ----------------------------------------------------------------------
-    public Animator animator;
+    Animator animator;
 
-    public float healthZombie = 100f;
+    public float healthZombie;
+    public float maxHealth;
     private float secund;
     private float secundDead;
     private float second;
@@ -35,9 +49,9 @@ public class MainZombieScript : MonoBehaviour
 
     public GameObject slizPrefab;
     public GameObject targetGun;
-    public GameObject MainZombie;
+    private GameObject MainZombie;
     public GameObject YakuZombie;
-    public GameObject slizClone;
+    private GameObject slizClone;
     public GameObject Hips;
     public GameObject Armature;
 
@@ -57,11 +71,18 @@ public class MainZombieScript : MonoBehaviour
  
     void Start()
     {
+        
+        
+        MainZombie = this.gameObject;
+        animator = GetComponent<Animator>();
+        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        healthBar = GetComponentInChildren<UIHealthBar>();
         killImage.gameObject.SetActive(false);
-        bloodVisual.GetComponent<VisualEffect>().enabled = true;
+        bloodVisual.GetComponent<VisualEffect>().enabled = false;
 
-        slizatorActiv = 0;
-        healthZombie = 100f;
+        
+        maxHealth = 100f;
+        healthZombie = maxHealth;
 
         RigActivity = false;
         mainCar = false;
@@ -70,6 +91,10 @@ public class MainZombieScript : MonoBehaviour
     
     void Update()
     {
+        blinkTimer -= Time.deltaTime;
+        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
+        float intensity = (lerp * blinkIntensity) + 1.0f;
+        skinnedMeshRenderer.material.color = Color.white * intensity;
        // - Взаимодействие с машиной -----------------------------------------
         if (mainCar == true)
         {
@@ -89,7 +114,7 @@ public class MainZombieScript : MonoBehaviour
                 if (RigActivity == true)
                 {
                     // - Метод отключает анимацию 
-                    MakePhysical();
+                    MakePhysical(directionOn);
                     if (second < 5)
                     {
                         Hips.transform.parent = null;
@@ -151,6 +176,7 @@ public class MainZombieScript : MonoBehaviour
                     
                     
                 }
+                PlayerPrefs.SetInt("slizator_true", slizatorActiv);
             }
             if (RigActivity == true)
             {
@@ -162,10 +188,11 @@ public class MainZombieScript : MonoBehaviour
                 if(killSec >= 1)
                 {
                     killImage.gameObject.SetActive(false);
+                    
                 }
 
                 
-                MakePhysical();
+                MakePhysical(directionOn);
                 if (slizPickup == 1)
                 {
                     if (secundDead < 10)
@@ -212,11 +239,11 @@ public class MainZombieScript : MonoBehaviour
 
     public void TakeDamage_gun(float amount)
     {
-        healthZombie -= amount;
-        
+        healthZombie -= amount;      
+        healthBar.SetHealthBarPercentage(healthZombie / maxHealth);
         if (healthZombie <= 0)
         {
-            
+            killSec = 0;
             if (MainZombie.CompareTag("Zombie_yellow"))
             {
                 
@@ -229,6 +256,14 @@ public class MainZombieScript : MonoBehaviour
                 RigActivity = true;
             }
         }
+        blinkTimer = blinkDuration;
+        
+    }
+
+    public void ApplyForce(Vector3 force)
+    {
+        var rigidBody = animator.GetBoneTransform(HumanBodyBones.Hips).GetComponent<Rigidbody>();
+        rigidBody.AddForce(force, ForceMode.VelocityChange);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -266,14 +301,18 @@ public class MainZombieScript : MonoBehaviour
         }
     }
 
-    public void MakePhysical()
+    public void MakePhysical(Vector3 directionOn)
     {
+        directionOn.y = 1;
+        ApplyForce(directionOn * dieForce);
         animator.enabled = false;
+        healthBar.gameObject.SetActive(false);
 
         for (int i = 0; i < ZombRigitAll.Length; ++i)
         {
             ZombRigitAll[i].isKinematic = false;
         }
+
     }
 
     
@@ -282,7 +321,7 @@ public class MainZombieScript : MonoBehaviour
     public void MakePhysicalUp()
     {
         Hips.transform.SetParent(Armature.transform);
-        
+        healthBar.gameObject.SetActive(true);
         animator.enabled = true;
         animator.SetTrigger("Idle");
         animator.SetInteger("Stand", 1);
@@ -322,6 +361,7 @@ public class MainZombieScript : MonoBehaviour
     }
     void Die()
     {
+        killSec = 0;
         Destroy(MainZombie.gameObject);
     }
 
