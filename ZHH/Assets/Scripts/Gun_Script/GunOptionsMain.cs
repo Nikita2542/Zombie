@@ -17,8 +17,8 @@ public class GunOptionsMain : MonoBehaviour
     {
         textGun[0].SetActive(true);
         textGun[1].SetActive(false);
-        gunAll[0].SetActive(true);
-        gunAll[1].SetActive(false);
+        gunAll[0].gameObject.SetActive(true);
+        gunAll[1].gameObject.SetActive(false);
         gunAvtomat = false;
         gunSlizator = false;
 
@@ -34,22 +34,22 @@ public class GunOptionsMain : MonoBehaviour
 
         if (Input.GetKey("1"))
         {
-            gunAll[0].SetActive(true);
-            textGun[0].SetActive(true);
+            gunAll[0].gameObject.SetActive(true);
+            textGun[0].gameObject.SetActive(true);
 
-            gunAll[1].SetActive(false);
-            textGun[1].SetActive(false);
+            gunAll[1].gameObject.SetActive(false);
+            textGun[1].gameObject.SetActive(false);
             gunAvtomat = true;
             gunSlizator = false;
         }
        
         if (Input.GetKey("2"))
         {
-            gunAll[1].SetActive(true);
-            textGun[1].SetActive(true);
+            gunAll[1].gameObject.SetActive(true);
+            textGun[1].gameObject.SetActive(true);
             
-            gunAll[0].SetActive(false);
-            textGun[0].SetActive(false);
+            gunAll[0].gameObject.SetActive(false);
+            textGun[0].gameObject.SetActive(false);
             gunSlizator = true;
             gunAvtomat = false;
 

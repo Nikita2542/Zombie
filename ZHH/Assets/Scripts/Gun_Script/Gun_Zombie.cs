@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 public class Gun_Zombie : MonoBehaviour
 {
+    private GunOptionsMain gunOptionsMain;
     // - Õ¿—“–Œ… ¿  ¿Ã≈–€ --------------------------------------------------------------------------------------------------------------
 
     public OptionGunAvtomat OptionCamera;
@@ -21,6 +22,11 @@ public class Gun_Zombie : MonoBehaviour
         [Range(20, 40)] public float zoomScoup;
         [Range(0, 7)] public float distans;
         [Range(0, 2)] public float distansScoup;
+        public float minOrbitY;
+        public float maxOrbitY;
+
+        public float minOrbitYScoup;
+        public float maxOrbitYScoup;
 
         public bool openGun;
         public bool openScope;
@@ -39,7 +45,7 @@ public class Gun_Zombie : MonoBehaviour
     [System.Serializable]
     public class OptionAvtomat
     {
-        [Range(0, 30)] public float damage_gun = 20;
+        
         [Range(0, 30)] public float fireRate = 50f;
         [Range(0, 1000)] public float Last_TargetForce = 40;
 
@@ -53,9 +59,16 @@ public class Gun_Zombie : MonoBehaviour
 
         public Text textBullet;
         public Text textBulletMax;
+
+        public Image Pricel;
+        public GameObject rem;
+        public float remNoScoup;
+        public float remScoup;
     }
+    [Range(0, 30)] public float damage_gun = 20;
+    Ray ray;
     private float secReload;
-    private bool reload;
+    
     private bool nothing;
 
     // - ƒ–”√Œ≈ ----------------------------------------------------------------------------------------------------------------------------------
@@ -76,31 +89,39 @@ public class Gun_Zombie : MonoBehaviour
     private GameObject Last_TargetGO;
 
     private float nextTimeToFire = 0f;
-    private float height;
+    public float height;
     private float range_gun;
   
     private Vector3 directionOn;
     public Image imageReloading;
 
+    public Animator animator;
+    public bool reloadGun;
+    public bool reload;
     // - START -------------------------------------------------------------------------------------------------------------------------
     public void Start()
     {
+        gunOptionsMain = GetComponentInParent<GunOptionsMain>();
+        Cursor.lockState = CursorLockMode.Locked;
+
         imageReloading.fillAmount = 0;
         imageReloading.gameObject.SetActive(false);
         OptionGun.bullet = OptionGun.bulletMax;
+        
         
 
         OptionCamera.openGun = true;
         OptionCamera.openScope = false;
 
         shotAudio = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
 
         // - «¿ƒ¿≈“ ƒ›‘ŒÀ“Õ€≈ Õ¿—“–Œ… »  ¿Ã≈–€ -
         ModedeDefault();
 
         if (PlayerPrefs.HasKey("damage_gun_sale"))
         {
-            OptionGun.damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
+            damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
         }
     }
     // - UPDATE GO ---------------------------------------------------------------------------------------------------------------------
@@ -117,12 +138,19 @@ public class Gun_Zombie : MonoBehaviour
         }
 
         OptionGun.textBullet.text  = OptionGun.bullet.ToString();
-        
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            reloadGun = true;
+        }
+        if(OptionGun.bullet <= 0)
+        {
+            reloadGun = true;
+        }
+
         // - œ≈–≈«¿–ﬂƒ ¿ - «¿ ŒÕ◊»À»—‹ œ”À» -
-        if (OptionGun.bullet <= 0)
-        {           
-            
-            
+        if(reloadGun == true)
+        {
             reload = true;
             if (secReload <= OptionGun.reloading)
             {
@@ -135,119 +163,156 @@ public class Gun_Zombie : MonoBehaviour
                         imageReloading.fillAmount += Time.deltaTime / OptionGun.reloading;
                     }
                 }
-               
+
             }
-            if(secReload >= OptionGun.reloading)
+            if (secReload >= OptionGun.reloading)
             {
-               
-                if (OptionGun.puliAll > 0)
+
+                if (OptionGun.puliAll > OptionGun.bulletMax)
                 {
-                    OptionGun.bullet = OptionGun.bulletMax;
-                    OptionGun.puliAll -= OptionGun.bulletMax;
+
+
                     if (imageReloading.fillAmount >= 1)
                     {
+                        nothing = false;
+                        OptionGun.puliAll = OptionGun.puliAll - (OptionGun.bulletMax - OptionGun.bullet);
+                        OptionGun.bullet = OptionGun.bulletMax;
+                        imageReloading.gameObject.SetActive(false);
                         imageReloading.fillAmount = 0;
+                        reloadGun = false;
                     }
-                    imageReloading.gameObject.SetActive(false);
+
                 }
-                if(OptionGun.puliAll <= OptionGun.bulletMax)
+                if (OptionGun.puliAll < OptionGun.bulletMax)
                 {
-                    OptionGun.bulletMax = OptionGun.puliAll;
+                    if (imageReloading.fillAmount >= 1)
+                    {
+                        nothing = false;
+                        OptionGun.bulletMax = OptionGun.puliAll;
+
+
+                        OptionGun.bullet = OptionGun.bulletMax;
+                        OptionGun.puliAll -= OptionGun.bulletMax;
+                        imageReloading.gameObject.SetActive(false);
+                        imageReloading.fillAmount = 0;
+                        reloadGun = false;
+                    }
+
+
+
                 }
-                
-               
-                
+
+
+
 
                 secReload = 0;
             }
+
+
+
+
         }
-        else
+        if(reloadGun == false)
         {
+            OptionGun.bulletMax = 35;
             reload = false;
         }
+        
         
         // - œ–Œ¬≈– ¿ —Œ—“ŒﬂÕ»ﬂ œ–»÷≈À¿ -
 
         if (Input.GetMouseButton(1))
         {
+            OptionGun.rem.gameObject.transform.position = new Vector3(OptionGun.rem.transform.position.x, OptionGun.remScoup, OptionGun.rem.transform.position.z);
+            OptionGun.Pricel.gameObject.SetActive(false);
             OptionCamera.openScope = true;
             OptionCamera.openGun = false;
         }
         else
         {
+            OptionGun.rem.gameObject.transform.position = new Vector3(OptionGun.rem.transform.position.x, OptionGun.remNoScoup, OptionGun.rem.transform.position.z);
+            OptionGun.Pricel.gameObject.SetActive(true);
             OptionCamera.openGun = true;
             OptionCamera.openScope = false;
         }
 
         // - œ–»÷≈À¿ Õ≈¿ “»¬≈Õ -
-
-        if (OptionCamera.openGun == true)
+        if (gunOptionsMain.gunSlizator == false)
         {
-            SliderSensitivity();
-            ModeOpenGun();
-
-            // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
-            if (nothing == false)
+            if (OptionCamera.openGun == true)
             {
-                if (reload == false)
-                {
-                    if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
-                    {
-                        OptionGun.bullet = OptionGun.bullet - 1;
-                        playerCamera.TPSMinimumFOV = OptionCamera.recoil;
+                SliderSensitivity();
+                ModeOpenGun();
 
-                        shotAudio.PlayOneShot(shotClip);
-                        nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
-                        Shoot();
-                    }
-                    if (Input.GetMouseButtonDown(0))
+                // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
+
+                if (nothing == false)
+                {
+                    if (reload == false)
                     {
-                        playerCamera.TPSMinimumFOV = OptionCamera.recoil;
-                    }
-                    if (Input.GetMouseButtonUp(0))
-                    {
-                        playerCamera.TPSMinimumFOV = OptionCamera.zoom;
+                        if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+                        {
+                            animator.SetBool("Fire", true);
+                            OptionGun.bullet = OptionGun.bullet - 1;
+                            playerCamera.TPSMinimumFOV = OptionCamera.recoil;
+
+                            shotAudio.PlayOneShot(shotClip);
+                            nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
+                            Shoot();
+                        }
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            playerCamera.TPSMinimumFOV = OptionCamera.recoil;
+                        }
+                        if (Input.GetMouseButtonUp(0))
+                        {
+                            animator.SetBool("Fire", false);
+                            playerCamera.TPSMinimumFOV = OptionCamera.zoom;
+                        }
                     }
                 }
             }
-            
         }
+            
 
         // - œ–»÷≈À¿ ¿ “»¬≈Õ -
-
-        if (OptionCamera.openScope == true)
+        if (gunOptionsMain.gunSlizator == false)
         {
-            playerCamera.TPSHeight = height;
-            SliderSensitivityScoup();
-            ModeOpenScope();
-
-            // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
-            if (nothing == false)
+            if (OptionCamera.openScope == true)
             {
-                if (reload == false)
-                {
-                    if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
-                    {
-                        OptionGun.bullet = OptionGun.bullet - 1;
-                        playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
+                playerCamera.TPSHeight = height;
+                SliderSensitivityScoup();
+                ModeOpenScope();
 
-                        shotAudio.PlayOneShot(shotClip);
-                        nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
-                        Shoot();
-                    }
-                    if (Input.GetMouseButtonDown(0))
+                // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
+                if (nothing == false)
+                {
+                    if (reload == false)
                     {
-                        playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
-                    }
-                    if (Input.GetMouseButtonUp(0))
-                    {
-                        playerCamera.TPSMinimumFOV = OptionCamera.zoomScoup;
+                        if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+                        {
+                            OptionGun.bullet = OptionGun.bullet - 1;
+                            playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
+
+                            shotAudio.PlayOneShot(shotClip);
+                            nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
+                            Shoot();
+                        }
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
+                        }
+                        if (Input.GetMouseButtonUp(0))
+                        {
+                            playerCamera.TPSMinimumFOV = OptionCamera.zoomScoup;
+                        }
                     }
                 }
+
+
             }
-                
-               
         }
+            
 
         // - ƒŒ–¿¡Œ¿“‹ ›‘‘≈ “ ”— Œ–≈Õ»ﬂ ¿¬“ŒÃŒ¡»Àﬂ -
 
@@ -259,7 +324,7 @@ public class Gun_Zombie : MonoBehaviour
 
         // - Œ“ƒ¿≈“ DAMAGE - —Œ’–¿Õ≈Õ»≈ -
 
-        PlayerPrefs.SetFloat("damage_gun", OptionGun.damage_gun);
+        PlayerPrefs.SetFloat("damage_gun", damage_gun);
     }
    
 
@@ -278,7 +343,7 @@ public class Gun_Zombie : MonoBehaviour
 
             if (PlayerPrefs.HasKey("damage_gun_sale"))
             {
-                OptionGun.damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
+               damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
             }
             Debug.Log(hit_gun.transform.name);
            
@@ -287,7 +352,12 @@ public class Gun_Zombie : MonoBehaviour
             if (hit_gun.transform.TryGetComponent<MainZombieScript>(out var MainZombieScript))
             {
                 // - ¬Œ«¬–¿Ÿ¿≈“ DAMAGE   œ–Œ“»¬Õ» ” -
-                MainZombieScript.TakeDamage_gun(OptionGun.damage_gun);
+                MainZombieScript.TakeDamage_gun(damage_gun);
+            }
+            if (hit_gun.transform.TryGetComponent<HitBox>(out var hitBox))
+            {
+                // - ¬Œ«¬–¿Ÿ¿≈“ DAMAGE   œ–Œ“»¬Õ» ” -
+                hitBox.OnRaycastHit(this, ray.direction);
             }
             if (hit_gun.rigidbody != null)
             {
@@ -314,7 +384,7 @@ public class Gun_Zombie : MonoBehaviour
         OptionCamera.zoomScoup = 20;
         OptionCamera.distansScoup = 1f;
 
-        height = 1.08f;
+        height = 0.94f;
 
         OptionGun.sliderSensitivityScoup.value = OptionCamera.sensitivityScope;
         OptionGun.sliderSensitivity.value = OptionCamera.sensitivity;
@@ -324,8 +394,8 @@ public class Gun_Zombie : MonoBehaviour
     // - Õ¿—“–Œ… »  ¿Ã≈–€ - Œ–”∆»≈ -----------------------------------------------------------*MODeOPEnGUN*-------------------------------- 
     public void ModeOpenGun()
     {
-        playerCamera.minOrbitY = -15f;
-        playerCamera.maxOrbitY = 70f;
+        playerCamera.minOrbitY = OptionCamera.minOrbitY;
+        playerCamera.maxOrbitY = OptionCamera.maxOrbitY;
 
         playerCamera.orbitYSpeed = OptionCamera.sensitivity;
         playerCamera.orbitXSpeed = OptionCamera.sensitivity;
@@ -337,8 +407,8 @@ public class Gun_Zombie : MonoBehaviour
     // - Õ¿—“–Œ… »  ¿Ã≈–€ - œ–»÷≈À -----------------------------------------------------------*MODeOPEnSCOPE*-------------------------------------------- 
     public void ModeOpenScope()
     {
-        playerCamera.minOrbitY = -5f;
-        playerCamera.maxOrbitY = 1.5f;
+        playerCamera.minOrbitY = OptionCamera.minOrbitYScoup;
+        playerCamera.maxOrbitY = OptionCamera.maxOrbitYScoup;
 
         playerCamera.orbitYSpeed = OptionCamera.sensitivityScope;
         playerCamera.orbitXSpeed = OptionCamera.sensitivityScope;
