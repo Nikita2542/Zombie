@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class AiAgent : MonoBehaviour
 {
+    public PlayerHealth playerHealth; 
+
     public Speedometr speedometr;
     [HideInInspector]
     public AiStateMachine stateMachine;
@@ -31,10 +33,16 @@ public class AiAgent : MonoBehaviour
     public GameObject mainObject;
 
     [HideInInspector] public bool mainCar;
+    public bool attackActiv;
     [HideInInspector] public float second;
+    public float secondPlayer;
+    public int damageEnemy;
+    public Animator animator;
+    public float damagePeriod;
     // Start is called before the first frame update
     void Start()
     {
+        
         ragdoll = GetComponent<Ragdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         ui = GetComponentInChildren<UIHealthBar>();
@@ -63,7 +71,47 @@ public class AiAgent : MonoBehaviour
            
             second += Time.deltaTime;
         }
-        
+
+        if (attackActiv == true)
+        {
+            if(playerHealth.playerHealth > 0)
+            {
+                if (secondPlayer < damagePeriod)
+                {
+                    animator.SetBool("Attack", true);
+                    secondPlayer += Time.deltaTime;
+                }
+                if (secondPlayer > damagePeriod)
+                {
+                    
+                    playerHealth.playerHealth -= damageEnemy;
+                    secondPlayer = 0;
+
+                }
+            }
+            
+        }
+        if(attackActiv == false)
+        {
+            animator.SetBool("Attack", false);
+            secondPlayer = 0;
+        }
+
+
         stateMachine.Update();
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            attackActiv = true;
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            attackActiv = false;
+        }
     }
 }

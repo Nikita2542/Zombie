@@ -10,6 +10,7 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class Health : MonoBehaviour
 {
     public GunOptionsMain gunOptions;
+    
     [HideInInspector]
     public GameObject slizClone;
     public GameObject slizPrefab;
@@ -23,6 +24,7 @@ public class Health : MonoBehaviour
     private bool remActiv;
 
     public float maxHealth;
+    
     
     [HideInInspector]
     public float currentHealth;
