@@ -1896,7 +1896,7 @@ GameObject:
   - component: {fileID: 639635350}
   - component: {fileID: 639635349}
   m_Layer: 5
-  m_Name: picel
+  m_Name: pricel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7492,9 +7492,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5208703912812264097}
+  - component: {fileID: 5208703912812264099}
   - component: {fileID: 3580585360657449949}
   - component: {fileID: 354404866}
-  - component: {fileID: 5208703912812264099}
   - component: {fileID: 5208703912812264098}
   m_Layer: 8
   m_Name: Gun Avtomat
@@ -18536,7 +18536,6 @@ GameObject:
   - component: {fileID: 4988955583717137447}
   - component: {fileID: 466363075991919505}
   - component: {fileID: 8339633862960771883}
-  - component: {fileID: 8339633862960771884}
   m_Layer: 0
   m_Name: 'Zombie Idle '
   m_TagString: Untagged
@@ -40043,6 +40042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f108769daf5f67429314d6ade1eab9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCamera: {fileID: 1416010586}
+  damage_gun: 15
+  Gun_Camera: {fileID: 0}
   OptionCamera:
     sensitivity: 1.4
     sensitivityScope: 3
@@ -40052,15 +40054,13 @@ MonoBehaviour:
     zoomScoup: 0
     distans: 0
     distansScoup: 0
+    height: 0.94
     minOrbitY: -15
     maxOrbitY: 70
     minOrbitYScoup: -5
     maxOrbitYScoup: 10
     openGun: 0
     openScope: 0
-  anim_Part: {fileID: 6960905951193567436}
-  playerCamera: {fileID: 1416010586}
-  Gun_Camera: {fileID: 2242431962489448840}
   OptionGun:
     fireRate: 14.7
     Last_TargetForce: 1000
@@ -40068,24 +40068,23 @@ MonoBehaviour:
     bulletMax: 35
     puliAll: 50
     reloading: 2
+    remNoScoup: 607
+    remScoup: 703
+  ParticalAll:
+    anim_Part: {fileID: 6960905951193567436}
+    muzzleFlash: {fileID: 3494009146924425821}
+    nitro1: {fileID: 4334404321501950098}
+    nitro2: {fileID: 2871943169193965870}
+  ui:
     sliderSensitivity: {fileID: 458835918}
     sliderSensitivityScoup: {fileID: 1489933793}
     textBullet: {fileID: 1403019545}
     textBulletMax: {fileID: 1359032122}
     Pricel: {fileID: 639635349}
     rem: {fileID: 2004091023}
-    remNoScoup: 607
-    remScoup: 703
-  damage_gun: 15.18
-  ParticalAll:
-    muzzleFlash: {fileID: 3494009146924425821}
-    nitro1: {fileID: 4334404321501950098}
-    nitro2: {fileID: 2871943169193965870}
-  shotClip: {fileID: 8300000, guid: 1b8fdf59be541734f86f9ebf24084001, type: 3}
-  prefabLastTarget: {fileID: 7997629959602929769, guid: d586475b75d0e56498b4489fa17d821b, type: 3}
-  height: 0.94
-  imageReloading: {fileID: 2039301373}
-  animator: {fileID: 0}
+    imageReloading: {fileID: 2039301373}
+    shotClip: {fileID: 8300000, guid: 1b8fdf59be541734f86f9ebf24084001, type: 3}
+    prefabLastTarget: {fileID: 7997629959602929769, guid: d586475b75d0e56498b4489fa17d821b, type: 3}
   reloadGun: 0
   reload: 0
 --- !u!1 &3585263434354467470
@@ -68800,37 +68799,6 @@ MonoBehaviour:
   mainObject: {fileID: 1684796159446366195}
   mainCar: 0
   second: 0
---- !u!114 &8339633862960771884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1684796159446366195}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d93fdb2beecd6f4182e5d954a87c8c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthZombie: 0
-  GunOptions: {fileID: 0}
-  gameOption:
-    ZombieEmpty: {fileID: 0}
-    slizPrefab: {fileID: 0}
-    targetGun: {fileID: 0}
-    YakuZombie: {fileID: 0}
-    Hips: {fileID: 0}
-    Armature: {fileID: 0}
-  objectScene:
-    killImage: {fileID: 0}
-    hitAudio: {fileID: 0}
-    hitClip: {fileID: 0}
-    bloodVisual: {fileID: 0}
-  optionBlink:
-    blinkIntensity: 0
-    blinkDuration: 0
-    blinkTimer: 0
-  ZombRigitAll: []
 --- !u!1 &8369247282418262139
 GameObject:
   m_ObjectHideFlags: 0

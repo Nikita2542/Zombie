@@ -26,9 +26,13 @@ public class Health : MonoBehaviour
     
     [HideInInspector]
     public float currentHealth;
+    
     AiAgent agent;
+    
     SkinnedMeshRenderer skinnedMeshRenderer;
+    
     UIHealthBar healthBar;
+    
     Ragdoll ragdoll;
     
 

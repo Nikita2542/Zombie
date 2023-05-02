@@ -6,24 +6,32 @@ using UnityEngine.AI;
 public class AiAgent : MonoBehaviour
 {
     public Speedometr speedometr;
+    [HideInInspector]
     public AiStateMachine stateMachine;
     public AiStateId initialState;
+    [HideInInspector]
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
+    [HideInInspector]
     public Ragdoll ragdoll;
+    [HideInInspector]
     public HitBox[] hitBox;
+    [HideInInspector]
     public SkinnedMeshRenderer mesh;
+    [HideInInspector]
     public UIHealthBar ui;
+    [HideInInspector]
     public Transform playerTransform;
-    
+
+    [HideInInspector]
     public Health health;
 
     public GameObject hips;
     public GameObject armature;
     public GameObject mainObject;
 
-    public bool mainCar;
-    public float second;
+    [HideInInspector] public bool mainCar;
+    [HideInInspector] public float second;
     // Start is called before the first frame update
     void Start()
     {
