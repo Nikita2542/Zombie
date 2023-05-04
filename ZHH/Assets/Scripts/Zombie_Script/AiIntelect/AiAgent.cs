@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class AiAgent : MonoBehaviour
 {
-    public PlayerHealth playerHealth; 
+    public PlayerHealth playerHealth;
 
     public Speedometr speedometr;
     [HideInInspector]
@@ -14,31 +14,29 @@ public class AiAgent : MonoBehaviour
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
-    [HideInInspector]
-    public Ragdoll ragdoll;
-    [HideInInspector]
-    public HitBox[] hitBox;
-    [HideInInspector]
-    public SkinnedMeshRenderer mesh;
-    [HideInInspector]
-    public UIHealthBar ui;
-    [HideInInspector]
-    public Transform playerTransform;
+    [HideInInspector] public Ragdoll ragdoll;
+    [HideInInspector] public HitBox[] hitBox;
+    [HideInInspector] public SkinnedMeshRenderer mesh;
+    [HideInInspector] public UIHealthBar ui;
+    [HideInInspector] public Transform playerTransform;
 
-    [HideInInspector]
-    public Health health;
+    [HideInInspector] public Health health;
 
     public GameObject hips;
     public GameObject armature;
     public GameObject mainObject;
 
+   
+    
+
     [HideInInspector] public bool mainCar;
-    public bool attackActiv;
+    [HideInInspector] public bool attackActiv;
     [HideInInspector] public float second;
-    public float secondPlayer;
-    public int damageEnemy;
-    public Animator animator;
+     public float secondPlayer;
+
+    [HideInInspector] public Animator animator;
     public float damagePeriod;
+    public bool ActiveAttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,8 +47,9 @@ public class AiAgent : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         hitBox = GetComponentsInChildren<HitBox>();
         health = GetComponent<Health>();
+        animator = GetComponent<Animator>();
 
-        
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         stateMachine = new AiStateMachine(this);
@@ -65,40 +64,25 @@ public class AiAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(mainCar == true)
+
+        if (mainCar == true)
+        {
+            stateMachine.ChangeState(AiStateId.StandUp);
+        }
+        if(attackActiv == true)
+        {
+            ActiveAttack = true;
+            stateMachine.ChangeState(AiStateId.Attack);
+        }
+        if (attackActiv == false)
         {
             
-           
-            second += Time.deltaTime;
-        }
-
-        if (attackActiv == true)
-        {
-            if(playerHealth.playerHealth > 0)
-            {
-                if (secondPlayer < damagePeriod)
-                {
-                    animator.SetBool("Attack", true);
-                    secondPlayer += Time.deltaTime;
-                }
-                if (secondPlayer > damagePeriod)
-                {
-                    
-                    playerHealth.playerHealth -= damageEnemy;
-                    secondPlayer = 0;
-
-                }
-            }
+            ActiveAttack = false;
             
         }
-        if(attackActiv == false)
-        {
-            animator.SetBool("Attack", false);
-            secondPlayer = 0;
-        }
 
 
-        stateMachine.Update();
+            stateMachine.Update();
     }
     public void OnTriggerEnter(Collider other)
     {

@@ -6,7 +6,7 @@ using UnityEngine.UIElements.Experimental;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public RCC_CarControllerV3 car;
+    
     
     public int playerHealthMax;
     public int playerHealth;
@@ -15,9 +15,7 @@ public class PlayerHealth : MonoBehaviour
     public Image fillPlayer;
     // Start is called before the first frame update
     void Start()
-    {
-        
-        car = GetComponent<RCC_CarControllerV3>();
+    {      
         playerHealth = playerHealthMax;
     }
 
@@ -46,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
         if(playerHealth == 0)
         {
             
-                car.enabled = false;
+               
             
             
         }

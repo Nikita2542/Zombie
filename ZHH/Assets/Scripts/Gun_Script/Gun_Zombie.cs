@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,69 +8,81 @@ using Unity.VisualScripting;
 public class Gun_Zombie : MonoBehaviour
 {
 
-    // - Õ¿—“–Œ… ¿  ¿Ã≈–€ --------------------------------------------------------------------------------------------------------------
-
-    public RCC_Camera playerCamera;
+    // - –ù–ê–°–¢–†–û–ô–ö–ê –ö–ê–ú–ï–†–´ --------------------------------------------------------------------------------------------------------------
+    [Header("–£—Ä–æ–Ω –æ—Ä—É–∂–∏—è")]
     public float damage_gun = 20;
+    [Header("–ù–∞—Å—Ç—Ä–æ–π–∫–∞ –∫–∞–º–µ—Ä–∞")]
+    public RCC_Camera playerCamera;
+
+    public WeaponRecoil recoilGun;
+    
     [HideInInspector]
     public Camera Gun_Camera;
     public OptionGunAvtomat OptionCamera;
     [System.Serializable]
     public class OptionGunAvtomat
     {
+        [Header("–ß—É–≤—Å—Ç–≤–∏—Ç–µ–ª—å–Ω–æ—Å—Ç—å")]
         [Range(1, 5)] public float sensitivity = 1;
         [Range(1, 20)] public float sensitivityScope = 1;
+        [Header("–û—Ç–¥–∞—á–∞ –ø—Ä–∏ —Å—Ç—Ä–µ–ª—å–±–µ")]
         [Range(40, 120)] public float recoil;
         [Range(20, 60)] public float recoilScoup;
+        [Header("–ó—É–º –∫–∞–º–µ—Ä—ã ‚ö†")]
         [Range(20, 40)] public float zoom;
         [Range(20, 40)] public float zoomScoup;
+        [Header("–î–∏—Å—Ç–∞–Ω—Ü–∏—è –∫–∞–º–µ—Ä—ã ‚ö†")]
         [Range(0, 7)] public float distans;
         [Range(0, 2)] public float distansScoup;
+        [Header("–í—ã—Å–æ—Ç–∞ –∫–∞–º–µ—Ä—ã ‚ö†")]
         public float height;
+        [Header("–í–µ—Ä—Ç–∏–∫–∞–ª—å–Ω–∞—è –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç—å")]
         public float minOrbitY;
         public float maxOrbitY;
-
+        [Header("–í–µ—Ä—Ç–∏–∫–∞–ª—å–Ω–∞—è –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç—å –≤ –ø—Ä–∏—Ü–µ–ª–µ")]
         public float minOrbitYScoup;
         public float maxOrbitYScoup;
-
+        [Header("–ü—Ä–æ–≤–µ—Ä–∫–∞ –≤—ã—Ö–æ–¥–∞ –∏–∑ –ø—Ä–∏—Ü–µ–ª–∞ ‚ö†")]
         public bool openGun;
         public bool openScope;
     }
+
+
+
+
+
+
+
+    // - –ù–ê–°–¢–†–û–ô–ö–ê –û–†–£–ñ–ò–Ø --------------------------------------------------------------------------------------------------------------
     
-
-
-    
-
-   
-
-    // - Õ¿—“–Œ… ¿ Œ–”∆»ﬂ --------------------------------------------------------------------------------------------------------------
-
     private GunOptionsMain gunOptionsMain;
+    [Header("–ù–∞—Å—Ç—Ä–æ–π–∫–∞ –æ—Ä—É–∂–∏—è")]
     public OptionAvtomat OptionGun;
     [System.Serializable]
     public class OptionAvtomat
     {
         
-        [Range(0, 30)] public float fireRate = 50f;
-        [Range(0, 1000)] public float Last_TargetForce = 40;
-
+        [Range(0, 30)] [Header("–°–∫–æ—Ä–æ—Å—Ç—Ä–µ–ª—å–Ω–æ—Å—Ç—å")]public float fireRate = 50f;
+        [Range(0, 1000)][Header("–°–∏–ª–∞ –ø–∞—Ç—Ä–æ–Ω–∞")] public float Last_TargetForce = 40;
+        [Header("–ü–∞—Ç—Ä–æ–Ω—ã")]
         public int bullet;
         public int bulletMax;
         public int puliAll;
+        [Header("–í—Ä–µ–º—è –ø–µ—Ä–µ–∑–∞—Ä—è–¥–∫–∏")]
         public float reloading;
 
         
-        public float remNoScoup;
-        public float remScoup;
+        [HideInInspector] public float remNoScoup;
+        [HideInInspector] public float remScoup;
     }
-    
+   
     Ray ray;
     private float secReload;
     
     private bool nothing;
 
-    // - ƒ–”√Œ≈ ----------------------------------------------------------------------------------------------------------------------------------
-
+    // - –î–†–£–ì–û–ï ----------------------------------------------------------------------------------------------------------------------------------
+    [Header("UI")]
     public particle ParticalAll;
     [System.Serializable]
     public class particle
@@ -116,8 +128,15 @@ public class Gun_Zombie : MonoBehaviour
     [HideInInspector]
     public bool reload;
     // - START -------------------------------------------------------------------------------------------------------------------------
+
+    private void Awake()
+    {
+        recoilGun = GetComponent<WeaponRecoil>();
+    }
     public void Start()
     {
+        OptionGun.remNoScoup = 607;
+        OptionGun.remScoup = 703;
         gunOptionsMain = GetComponentInParent<GunOptionsMain>();
         Gun_Camera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -134,7 +153,7 @@ public class Gun_Zombie : MonoBehaviour
         shotAudio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
 
-        // - «¿ƒ¿≈“ ƒ›‘ŒÀ“Õ€≈ Õ¿—“–Œ… »  ¿Ã≈–€ -
+        // - –ó–ê–î–ê–ï–¢ –î–≠–§–û–õ–¢–ù–´–ï –ù–ê–°–¢–†–û–ô–ö–ò –ö–ê–ú–ï–†–´ -
         ModedeDefault();
 
         if (PlayerPrefs.HasKey("damage_gun_sale"))
@@ -166,7 +185,7 @@ public class Gun_Zombie : MonoBehaviour
             reloadGun = true;
         }
 
-        // - œ≈–≈«¿–ﬂƒ ¿ - «¿ ŒÕ◊»À»—‹ œ”À» -
+        // - –ü–ï–†–ï–ó–ê–†–Ø–î–ö–ê - –ó–ê–ö–û–ù–ß–ò–õ–ò–°–¨ –ü–£–õ–ò -
         if(reloadGun == true)
         {
             reload = true;
@@ -237,7 +256,7 @@ public class Gun_Zombie : MonoBehaviour
         }
         
         
-        // - œ–Œ¬≈– ¿ —Œ—“ŒﬂÕ»ﬂ œ–»÷≈À¿ -
+        // - –ü–†–û–í–ï–†–ö–ê –°–û–°–¢–û–Ø–ù–ò–Ø –ü–†–ò–¶–ï–õ–ê -
 
         if (Input.GetMouseButton(1))
         {
@@ -254,7 +273,7 @@ public class Gun_Zombie : MonoBehaviour
             OptionCamera.openScope = false;
         }
 
-        // - œ–»÷≈À¿ Õ≈¿ “»¬≈Õ -
+        // - –ü–†–ò–¶–ï–õ–ê –ù–ï–ê–ö–¢–ò–í–ï–ù -
         if (gunOptionsMain.gunSlizator == false)
         {
             if (OptionCamera.openGun == true)
@@ -262,7 +281,7 @@ public class Gun_Zombie : MonoBehaviour
                 SliderSensitivity();
                 ModeOpenGun();
 
-                // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
+                // - –ü–ï–†–ï–ó–ê–†–Ø–î–ö–ê –ü–†–û–®–õ–ê -
 
                 if (nothing == false)
                 {
@@ -293,7 +312,7 @@ public class Gun_Zombie : MonoBehaviour
         }
             
 
-        // - œ–»÷≈À¿ ¿ “»¬≈Õ -
+        // - –ü–†–ò–¶–ï–õ–ê –ê–ö–¢–ò–í–ï–ù -
         if (gunOptionsMain.gunSlizator == false)
         {
             if (OptionCamera.openScope == true)
@@ -302,7 +321,7 @@ public class Gun_Zombie : MonoBehaviour
                 SliderSensitivityScoup();
                 ModeOpenScope();
 
-                // - œ≈–≈«¿–ﬂƒ ¿ œ–ŒÿÀ¿ -
+                // - –ü–ï–†–ï–ó–ê–†–Ø–î–ö–ê –ü–†–û–®–õ–ê -
                 if (nothing == false)
                 {
                     if (reload == false)
@@ -332,7 +351,7 @@ public class Gun_Zombie : MonoBehaviour
         }
             
 
-        // - ƒŒ–¿¡Œ¿“‹ ›‘‘≈ “ ”— Œ–≈Õ»ﬂ ¿¬“ŒÃŒ¡»Àﬂ -
+        // - –î–û–†–ê–ë–û–ê–¢–¨ –≠–§–§–ï–ö–¢ –£–°–ö–û–†–ï–ù–ò–Ø –ê–í–¢–û–ú–û–ë–ò–õ–Ø -
 
         if (Input.GetKey(KeyCode.F))
         {
@@ -340,21 +359,23 @@ public class Gun_Zombie : MonoBehaviour
             ParticalAll.nitro2.Play();
         }
 
-        // - Œ“ƒ¿≈“ DAMAGE - —Œ’–¿Õ≈Õ»≈ -
+        // - –û–¢–î–ê–ï–¢ DAMAGE - –°–û–•–†–ê–ù–ï–ù–ò–ï -
 
         PlayerPrefs.SetFloat("damage_gun", damage_gun);
     }
    
 
 
-    // - œ–Œ¬≈– ¿ Õ¿ œŒœ¿ƒ¿Õ»≈ ¬ œ–Œ“»¬Õ» ¿ ------------------------------------* SHOOT() *--------------------------------------------
+    // - –ü–†–û–í–ï–†–ö–ê –ù–ê –ü–û–ü–ê–î–ê–ù–ò–ï –í –ü–†–û–¢–ò–í–ù–ò–ö–ê ------------------------------------* SHOOT() *--------------------------------------------
     void Shoot()
     {
-        //anim_Gun.Play();// - ¿Õ»Ã¿÷»ﬂ œ”ÿ » - Œ“ƒ¿◊¿ -
+        recoilGun.playerCamera = playerCamera;
+        recoilGun.GenerateRecoil();
+        //anim_Gun.Play();// - –ê–ù–ò–ú–ê–¶–ò–Ø –ü–£–®–ö–ò - –û–¢–î–ê–ß–ê -
 
-        ParticalAll.anim_Part.Play(); // - ¬€À≈“¿≈“ œ”Àﬂ -
+        ParticalAll.anim_Part.Play(); // - –í–´–õ–ï–¢–ê–ï–¢ –ü–£–õ–Ø -
 
-        ParticalAll.muzzleFlash.Play(); // - ›‘‘≈ “ ¬€—“–≈À¿ -
+        ParticalAll.muzzleFlash.Play(); // - –≠–§–§–ï–ö–¢ –í–´–°–¢–†–ï–õ–ê -
         
         if (Physics.Raycast(Gun_Camera.transform.position, Gun_Camera.transform.forward, out RaycastHit hit_gun, range_gun = 100f))
         {
@@ -369,22 +390,22 @@ public class Gun_Zombie : MonoBehaviour
 
             if (hit_gun.transform.TryGetComponent<MainZombieScript>(out var MainZombieScript))
             {
-                // - ¬Œ«¬–¿Ÿ¿≈“ DAMAGE   œ–Œ“»¬Õ» ” -
+                // - –í–û–ó–í–†–ê–©–ê–ï–¢ DAMAGE –ö –ü–†–û–¢–ò–í–ù–ò–ö–£ -
                 MainZombieScript.TakeDamage_gun(damage_gun);
             }
             if (hit_gun.transform.TryGetComponent<HitBox>(out var hitBox))
             {
-                // - ¬Œ«¬–¿Ÿ¿≈“ DAMAGE   œ–Œ“»¬Õ» ” -
+                // - –í–û–ó–í–†–ê–©–ê–ï–¢ DAMAGE –ö –ü–†–û–¢–ò–í–ù–ò–ö–£ -
                 hitBox.OnRaycastHit(this, ray.direction);
             }
             if (hit_gun.rigidbody != null)
             {
-                // - —»À¿ œ¿“–ŒÕ¿   Œ¡‹≈ “¿Ã -
+                // - –°–ò–õ–ê –ü–ê–¢–†–û–ù–ê –ö –û–ë–¨–ï–ö–¢–ê–ú -
                 hit_gun.rigidbody.AddForce(-hit_gun.normal * OptionGun.Last_TargetForce);
             }
             if (ui.prefabLastTarget != null)
             {
-                // - œŒ—À≈ƒÕ»≈ œŒœ¿ƒ¿Õ»≈ - ›‘‘≈ “ -
+                // - –ü–û–°–õ–ï–î–ù–ò–ï –ü–û–ü–ê–î–ê–ù–ò–ï - –≠–§–§–ï–ö–¢ -
                 Last_TargetGO = Instantiate(ui.prefabLastTarget, hit_gun.point, Quaternion.LookRotation(hit_gun.normal));
             }
 
@@ -393,7 +414,7 @@ public class Gun_Zombie : MonoBehaviour
 
     }
 
-    // - ƒ›‘ŒÀ“Õ€≈ Õ¿—“–Œ… »  ¿Ã≈–€ ----------------------------------------------------------*MODeDEFAULT*---------------------------------------- 
+    // - –î–≠–§–û–õ–¢–ù–´–ï –ù–ê–°–¢–†–û–ô–ö–ò –ö–ê–ú–ï–†–´ ----------------------------------------------------------*MODeDEFAULT*---------------------------------------- 
     public void ModedeDefault()
     {
         OptionCamera.zoom = 40;
@@ -409,7 +430,7 @@ public class Gun_Zombie : MonoBehaviour
         playerCamera.TPSHeight = OptionCamera.height;
     }
 
-    // - Õ¿—“–Œ… »  ¿Ã≈–€ - Œ–”∆»≈ -----------------------------------------------------------*MODeOPEnGUN*-------------------------------- 
+    // - –ù–ê–°–¢–†–û–ô–ö–ò –ö–ê–ú–ï–†–´ - –û–†–£–ñ–ò–ï -----------------------------------------------------------*MODeOPEnGUN*-------------------------------- 
     public void ModeOpenGun()
     {
         playerCamera.minOrbitY = OptionCamera.minOrbitY;
@@ -422,7 +443,7 @@ public class Gun_Zombie : MonoBehaviour
         playerCamera.TPSDistance = OptionCamera.distans;
     }
 
-    // - Õ¿—“–Œ… »  ¿Ã≈–€ - œ–»÷≈À -----------------------------------------------------------*MODeOPEnSCOPE*-------------------------------------------- 
+    // - –ù–ê–°–¢–†–û–ô–ö–ò –ö–ê–ú–ï–†–´ - –ü–†–ò–¶–ï–õ -----------------------------------------------------------*MODeOPEnSCOPE*-------------------------------------------- 
     public void ModeOpenScope()
     {
         playerCamera.minOrbitY = OptionCamera.minOrbitYScoup;
@@ -435,7 +456,7 @@ public class Gun_Zombie : MonoBehaviour
         playerCamera.TPSDistance = OptionCamera.distansScoup;        
     }
     
-    // - Õ¿—“–Œ… » ◊”¬—“¬»“≈À‹ÕŒ—“» ¬ »√–≈ ------------------------------------------------*SLIDErSENSITIVITySCOUP*--------------------
+    // - –ù–ê–°–¢–†–û–ô–ö–ò –ß–£–í–°–¢–í–ò–¢–ï–õ–¨–ù–û–°–¢–ò –í –ò–ì–†–ï ------------------------------------------------*SLIDErSENSITIVITySCOUP*--------------------
     public void SliderSensitivityScoup()
     {
         OptionCamera.sensitivityScope = ui.sliderSensitivityScoup.value;

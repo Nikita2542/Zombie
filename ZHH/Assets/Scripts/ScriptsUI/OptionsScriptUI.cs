@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class OptionsScriptUI : MonoBehaviour
 {
+    
     public GameObject optionsCanva;
     public bool activeOptions;
     
@@ -13,6 +14,7 @@ public class OptionsScriptUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         optionsCanva.SetActive(false);
     }
 
@@ -24,10 +26,12 @@ public class OptionsScriptUI : MonoBehaviour
             if(activeOptions == false)
             {
                 Pause();
+                
             }
             else
             {
                 Returne();
+                
             }
         }
     }
@@ -42,8 +46,10 @@ public class OptionsScriptUI : MonoBehaviour
     }
     public void Returne()
     {
+        
         optionsCanva.SetActive(false);
         activeOptions = false;
         Cursor.lockState = CursorLockMode.Locked;
+        
     }
 }

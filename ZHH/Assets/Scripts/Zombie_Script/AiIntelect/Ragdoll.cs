@@ -37,8 +37,8 @@ public class Ragdoll : MonoBehaviour
             rigidBody.isKinematic = true;
         }
         animator.enabled = true;
-        animator.SetTrigger("StandUp");
-        animator.SetTrigger("Idle");
+        /*animator.SetTrigger("StandUp");
+        animator.SetTrigger("Idle");*/
     }
     
     public void Attack()

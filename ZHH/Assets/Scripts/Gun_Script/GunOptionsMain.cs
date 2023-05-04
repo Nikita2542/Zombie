@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class GunOptionsMain : MonoBehaviour
 {
-    
+    [Header("Оружие")]
     public GameObject[] gunAll;
+    [Header("Текст")]
     public GameObject[] textGun;
 
-    public bool gunAvtomat;
-    public bool gunSlizator;
-    
+    [HideInInspector] public bool gunAvtomat;
+    [HideInInspector] public bool gunSlizator;
+
+    [HideInInspector] public bool gunActiv;
+    [HideInInspector] public bool slizatorActiv;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +36,9 @@ public class GunOptionsMain : MonoBehaviour
 
 
 
-        if (Input.GetKey("1"))
+        if (gunActiv == true)
         {
+            
             gunAll[0].gameObject.SetActive(true);
             textGun[0].gameObject.SetActive(true);
 
@@ -43,8 +48,9 @@ public class GunOptionsMain : MonoBehaviour
             gunSlizator = false;
         }
        
-        if (Input.GetKey("2"))
+        if (slizatorActiv == true)
         {
+            
             gunAll[1].gameObject.SetActive(true);
             textGun[1].gameObject.SetActive(true);
             

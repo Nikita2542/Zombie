@@ -9,25 +9,27 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class Health : MonoBehaviour
 {
+
+     public float maxHealth;
     public GunOptionsMain gunOptions;
     
     [HideInInspector]
     public GameObject slizClone;
-    public GameObject slizPrefab;
-    public GameObject slizTarget;
+     public GameObject slizPrefab;
+     public GameObject slizTarget;
     public GameObject targetGun;
     public GameObject hips;
-    public GameObject Armature;
+     public GameObject Armature;
 
     public Image rem;
     private float remSec;
     private bool remActiv;
 
-    public float maxHealth;
+    
     
     
     [HideInInspector]
-    public float currentHealth;
+        public float currentHealth;
     
     AiAgent agent;
     
@@ -38,16 +40,16 @@ public class Health : MonoBehaviour
     Ragdoll ragdoll;
     
 
-    public float blinkIntensity;
-    public float blinkDuration;
+     public float blinkIntensity;
+     public float blinkDuration;
     float blinkTimer;
 
     float slizSpeed = 15.0f;
 
-    public int slizYellow;
+    [HideInInspector] public int slizYellow;
 
     private bool slizPickup = false;
-    [HideInInspector]
+    
     
     float secundDead;
     float second;
