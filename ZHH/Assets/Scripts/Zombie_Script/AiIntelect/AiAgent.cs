@@ -29,7 +29,7 @@ public class AiAgent : MonoBehaviour
    
     
 
-    [HideInInspector] public bool mainCar;
+    public bool mainCar;
     [HideInInspector] public bool attackActiv;
     [HideInInspector] public float second;
      public float secondPlayer;
@@ -67,7 +67,13 @@ public class AiAgent : MonoBehaviour
 
         if (mainCar == true)
         {
+            ragdoll.ActivateRagdoll();
             stateMachine.ChangeState(AiStateId.StandUp);
+        }
+        if(mainCar == false)
+        {
+            
+            ragdoll.DeactivateRagdoll();
         }
         if(attackActiv == true)
         {

@@ -6,9 +6,9 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class AiStandState : AiState
 {
 
-    private bool UpActive;
-    private float secondUp;
-    private float secondDown;
+    bool UpActive;
+    float secondUp;
+    float secondDown;
 
     public AiStateId GetId()
     {
@@ -17,14 +17,12 @@ public class AiStandState : AiState
 
     public void Enter(AiAgent agent)
     {
-        if(agent.speedometr.speedCAR > 20)
-        {
-            UpActive = false;
-            secondUp = 0;
-            secondUp = 0;
-            agent.ragdoll.ActivateRagdoll();
-            agent.ui.gameObject.SetActive(false);
-        }
+        
+            
+            
+            
+           
+        
         
         
     }
@@ -57,10 +55,10 @@ public class AiStandState : AiState
                 agent.ragdoll.ActivateRagdollStandUp();
                 agent.animator.SetTrigger("StandUp");
                 UpActive = true;
-                
-                
-                
-                
+                agent.mainCar = false;
+
+
+
             }
             
 
@@ -79,7 +77,7 @@ public class AiStandState : AiState
                 agent.animator.SetTrigger("IdleStand");
                 agent.stateMachine.ChangeState(AiStateId.Idle);
                 agent.ui.gameObject.SetActive(true);
-                agent.mainCar = false;
+                
                 UpActive = false;
                 secondDown = 0;
                 

@@ -120,12 +120,7 @@ public class Health : MonoBehaviour
         deathState.direction = direction;
         agent.stateMachine.ChangeState(AiStateId.Death);
     }
-    public void Stand()
-    {
-        AiStandState standState = agent.stateMachine.GetState(AiStateId.StandUp) as AiStandState;
-        agent.stateMachine.ChangeState(AiStateId.StandUp);
-        
-    }
+   
     public void AttackHealz()
     {
         agent.stateMachine.ChangeState(AiStateId.Attack);
@@ -164,10 +159,7 @@ public class Health : MonoBehaviour
             }
         }
         
-        if (agent.mainCar == true)
-        {
-            Stand();
-        }
+        
         if(agent.navMeshAgent.speed == 0)
         {
             AttackHealz();

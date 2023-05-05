@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+using System.Collections;
+using static UnityEngine.InputSystem.UI.VirtualMouseInput;
+using Unity.VisualScripting;
+using UnityEditor.UIElements;
+
 public class WeaponWheelController : MonoBehaviour
 {
     public OptionsScriptUI options;
@@ -20,12 +25,12 @@ public class WeaponWheelController : MonoBehaviour
     public int saleAmmo;
     private int sliz_yellow;
     private float secundomer;
-
+    
     public Animator anim;
     public TextMeshProUGUI ammoText;
     public Image cyrcleImage;
     public GameObject mainFarmUI;
-
+    
     public bool craftActive;
 
     public void Start()
@@ -46,14 +51,20 @@ public class WeaponWheelController : MonoBehaviour
             StopSlowMotion();
             Debug.Log(Input.mousePosition);
 
-            
+
             if (Input.GetKey(key))
             {
                 StartSlowMotion();
                 weaponWheelSelected = true;
+                
+                
+                
                 Cursor.lockState = CursorLockMode.Confined;
                 
-            }
+                
+
+            }           
+            
             if (Input.GetKeyUp(key))
             {              
                 StopSlowMotion();
