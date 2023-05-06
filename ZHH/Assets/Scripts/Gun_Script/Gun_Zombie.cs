@@ -179,13 +179,28 @@ public class Gun_Zombie : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R))
         {
-            reloadGun = true;
+            if (OptionGun.puliAll > 0)
+            {
+                if (OptionGun.bullet < OptionGun.bulletMax)
+                {
+                    reloadGun = true;
+                }
+            }
+            
+            
         }
-        if(OptionGun.bullet <= 0)
+        if (OptionGun.bullet <= 0)
         {
-            reloadGun = true;
+            
+            if (OptionGun.puliAll > 0)
+            {
+                if (OptionGun.bullet < OptionGun.bulletMax)
+                {
+                    reloadGun = true;
+                }
+            }
         }
-
+        
         // - ПЕРЕЗАРЯДКА - ЗАКОНЧИЛИСЬ ПУЛИ -
         if(reloadGun == true)
         {
@@ -207,22 +222,51 @@ public class Gun_Zombie : MonoBehaviour
                 if (secReload >= OptionGun.reloading)
                 {
 
-                    if (OptionGun.puliAll > OptionGun.bulletMax)
-                    {
+                    //if (OptionGun.puliAll > OptionGun.bulletMax)
+                   // {
 
 
                         if (ui.imageReloading.fillAmount >= 1)
                         {
                             nothing = false;
-                            OptionGun.puliAll = OptionGun.puliAll - (OptionGun.bulletMax - OptionGun.bullet);
-                            OptionGun.bullet = OptionGun.bulletMax;
-                            ui.imageReloading.gameObject.SetActive(false);
+                            
+                    if (OptionGun.puliAll<=OptionGun.bulletMax)
+                    {
+                        
+
+
+                        
+                        int s = OptionGun.puliAll + OptionGun.bullet;
+                        if (s > OptionGun.bulletMax) 
+                        {
+                            int m = (OptionGun.puliAll + OptionGun.bullet) - OptionGun.bulletMax;
+                            int p = ((OptionGun.puliAll + OptionGun.bullet) - OptionGun.bulletMax);
+                            OptionGun.bullet = m + (OptionGun.bulletMax - p);
+                            OptionGun.puliAll = p;
+                        }
+                        if (s < OptionGun.bulletMax)
+                        {
+                            int p = (OptionGun.bulletMax - (OptionGun.puliAll + OptionGun.bullet));
+                            OptionGun.bullet = OptionGun.bulletMax - p;
+                            OptionGun.puliAll = 0;
+
+
+                        }
+                    }
+                    if (OptionGun.puliAll >= OptionGun.bulletMax)
+                    {
+                        OptionGun.puliAll = OptionGun.puliAll - (OptionGun.bulletMax - OptionGun.bullet);
+                        OptionGun.bullet = (OptionGun.bulletMax - OptionGun.bullet) + OptionGun.bullet;
+                    }
+
+
+                    ui.imageReloading.gameObject.SetActive(false);
                             ui.imageReloading.fillAmount = 0;
                             reloadGun = false;
                         }
 
-                    }
-                    if (OptionGun.puliAll < OptionGun.bulletMax)
+                   // }
+                    /*if (OptionGun.puliAll < OptionGun.bulletMax)
                     {
                         if (ui.imageReloading.fillAmount >= 1)
                         {
@@ -238,11 +282,11 @@ public class Gun_Zombie : MonoBehaviour
                                 ui.imageReloading.fillAmount = 0;
                                 reloadGun = false;
                             
-                        }
+                        }*/
 
 
 
-                    }
+                    
 
 
 
@@ -256,7 +300,7 @@ public class Gun_Zombie : MonoBehaviour
         }
         if(reloadGun == false)
         {
-            OptionGun.bulletMax = 35;
+           
             reload = false;
         }
         

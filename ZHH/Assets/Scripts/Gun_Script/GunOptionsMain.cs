@@ -11,9 +11,11 @@ public class GunOptionsMain : MonoBehaviour
 
     [HideInInspector] public bool gunAvtomat;
     [HideInInspector] public bool gunSlizator;
+    [HideInInspector] public bool gunPulemet;
 
     [HideInInspector] public bool gunActiv;
     [HideInInspector] public bool slizatorActiv;
+    [HideInInspector] public bool PulemetActiv;
 
 
     // Start is called before the first frame update
@@ -21,10 +23,13 @@ public class GunOptionsMain : MonoBehaviour
     {
         textGun[0].SetActive(true);
         textGun[1].SetActive(false);
+        textGun[2].SetActive(false);
         gunAll[0].gameObject.SetActive(true);
         gunAll[1].gameObject.SetActive(false);
+        gunAll[2].gameObject.SetActive(false);
         gunAvtomat = false;
         gunSlizator = false;
+        gunPulemet = false;
 
 
 
@@ -44,8 +49,12 @@ public class GunOptionsMain : MonoBehaviour
 
             gunAll[1].gameObject.SetActive(false);
             textGun[1].gameObject.SetActive(false);
+            gunAll[2].gameObject.SetActive(false);
+            textGun[2].gameObject.SetActive(false);
+            
             gunAvtomat = true;
             gunSlizator = false;
+            gunPulemet = false;
         }
        
         if (slizatorActiv == true)
@@ -56,10 +65,28 @@ public class GunOptionsMain : MonoBehaviour
             
             gunAll[0].gameObject.SetActive(false);
             textGun[0].gameObject.SetActive(false);
+
+            gunAll[2].gameObject.SetActive(false);
+            textGun[2].gameObject.SetActive(false);
+            
             gunSlizator = true;
             gunAvtomat = false;
+            gunPulemet = false;
 
         }
-       
+       if(PulemetActiv == true)
+        {
+            gunAll[2].gameObject.SetActive(true);
+            textGun[2].gameObject.SetActive(true);
+
+            gunAll[0].gameObject.SetActive(false);
+            textGun[0].gameObject.SetActive(false);
+            gunAll[1].gameObject.SetActive(false);
+            textGun[1].gameObject.SetActive(false);
+
+            gunPulemet = true;
+            gunAvtomat = false;
+            gunSlizator = false;
+        }
     }
 }
