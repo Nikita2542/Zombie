@@ -12,11 +12,12 @@ public class Gun_Zombie : MonoBehaviour
     [Header("Урон оружия")]
     public float damage_gun = 20;
     [Header("Настройка камера")]
+
     public RCC_Camera playerCamera;
 
     public WeaponRecoil recoilGun;
-    
-    [HideInInspector]
+
+
     public Camera Gun_Camera;
     public OptionGunAvtomat OptionCamera;
     [System.Serializable]
@@ -139,7 +140,7 @@ public class Gun_Zombie : MonoBehaviour
         OptionGun.remNoScoup = 607;
         OptionGun.remScoup = 703;
         gunOptionsMain = GetComponentInParent<GunOptionsMain>();
-        Gun_Camera = GetComponentInChildren<Camera>();
+        
         Cursor.lockState = CursorLockMode.Locked;
 
         ui.imageReloading.fillAmount = 0;
@@ -470,9 +471,9 @@ public class Gun_Zombie : MonoBehaviour
         OptionCamera.distans = 6;
 
         OptionCamera.zoomScoup = 20;
-        OptionCamera.distansScoup = 1f;
+        
 
-        OptionCamera.height = 0.94f;
+       
 
         ui.sliderSensitivityScoup.value = OptionCamera.sensitivityScope;
         ui.sliderSensitivity.value = OptionCamera.sensitivity;

@@ -9,6 +9,11 @@ public class GunOptionsMain : MonoBehaviour
     [Header("Текст")]
     public GameObject[] textGun;
 
+    [Header("Скрипт для автомата")]
+    public Gun_Zombie avtomatZombie;
+    [Header("Скрипт для пулемета")]
+    public Gun_Zombie pulemetZombie ;
+
     [HideInInspector] public bool gunAvtomat;
     [HideInInspector] public bool gunSlizator;
     [HideInInspector] public bool gunPulemet;
@@ -43,7 +48,8 @@ public class GunOptionsMain : MonoBehaviour
 
         if (gunActiv == true)
         {
-            
+            avtomatZombie.enabled = true;
+            pulemetZombie.enabled = false;
             gunAll[0].gameObject.SetActive(true);
             textGun[0].gameObject.SetActive(true);
 
@@ -76,6 +82,8 @@ public class GunOptionsMain : MonoBehaviour
         }
        if(PulemetActiv == true)
         {
+            avtomatZombie.enabled = false;
+            pulemetZombie.enabled = true;
             gunAll[2].gameObject.SetActive(true);
             textGun[2].gameObject.SetActive(true);
 

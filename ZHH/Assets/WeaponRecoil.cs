@@ -9,6 +9,10 @@ public class WeaponRecoil : MonoBehaviour
     public float duration;
 
     float time;
+    public void Start()
+    {
+       
+    }
     public void GenerateRecoil()
     {
         time = duration;
@@ -21,7 +25,7 @@ public class WeaponRecoil : MonoBehaviour
     {
         if(time > 0)
         {
-            playerCamera.orbitY -= ((verticalRecoil / 100) * Time.deltaTime) / duration;
+            playerCamera.orbitY -= ((verticalRecoil / 1000) * Time.deltaTime) / duration;
             
             time -= Time.deltaTime;
         }
