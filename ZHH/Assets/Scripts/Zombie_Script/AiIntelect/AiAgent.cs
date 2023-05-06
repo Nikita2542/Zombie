@@ -73,7 +73,7 @@ public class AiAgent : MonoBehaviour
         if(mainCar == false)
         {
             
-            ragdoll.DeactivateRagdoll();
+            
         }
         if(attackActiv == true)
         {

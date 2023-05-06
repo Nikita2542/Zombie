@@ -70,10 +70,11 @@ public class Gun_Zombie : MonoBehaviour
         public int puliAll;
         [Header("Время перезарядки")]
         public float reloading;
+        public float range_gun;
 
-        
         [HideInInspector] public float remNoScoup;
         [HideInInspector] public float remScoup;
+
     }
    
     Ray ray;
@@ -117,7 +118,7 @@ public class Gun_Zombie : MonoBehaviour
 
     private float nextTimeToFire = 0f;
     
-    private float range_gun;
+    
   
     private Vector3 directionOn;
     
@@ -188,64 +189,68 @@ public class Gun_Zombie : MonoBehaviour
         // - ПЕРЕЗАРЯДКА - ЗАКОНЧИЛИСЬ ПУЛИ -
         if(reloadGun == true)
         {
-            reload = true;
-            if (secReload <= OptionGun.reloading)
-            {
-                if (OptionGun.puliAll > 0)
+            
+                reload = true;
+                if (secReload <= OptionGun.reloading)
                 {
-                    secReload += Time.deltaTime;
-                    ui.imageReloading.gameObject.SetActive(true);
-                    if (ui.imageReloading.fillAmount < 1)
+                    if (OptionGun.puliAll >= 0)
                     {
-                        ui.imageReloading.fillAmount += Time.deltaTime / OptionGun.reloading;
-                    }
-                }
-
-            }
-            if (secReload >= OptionGun.reloading)
-            {
-
-                if (OptionGun.puliAll > OptionGun.bulletMax)
-                {
-
-
-                    if (ui.imageReloading.fillAmount >= 1)
-                    {
-                        nothing = false;
-                        OptionGun.puliAll = OptionGun.puliAll - (OptionGun.bulletMax - OptionGun.bullet);
-                        OptionGun.bullet = OptionGun.bulletMax;
-                        ui.imageReloading.gameObject.SetActive(false);
-                        ui.imageReloading.fillAmount = 0;
-                        reloadGun = false;
+                        secReload += Time.deltaTime;
+                        ui.imageReloading.gameObject.SetActive(true);
+                        if (ui.imageReloading.fillAmount < 1)
+                        {
+                            ui.imageReloading.fillAmount += Time.deltaTime / OptionGun.reloading;
+                        }
                     }
 
                 }
-                if (OptionGun.puliAll < OptionGun.bulletMax)
+                if (secReload >= OptionGun.reloading)
                 {
-                    if (ui.imageReloading.fillAmount >= 1)
+
+                    if (OptionGun.puliAll > OptionGun.bulletMax)
                     {
-                        nothing = false;
-                        OptionGun.bulletMax = OptionGun.puliAll;
 
 
-                        OptionGun.bullet = OptionGun.bulletMax;
-                        OptionGun.puliAll -= OptionGun.bulletMax;
-                        ui.imageReloading.gameObject.SetActive(false);
-                        ui.imageReloading.fillAmount = 0;
-                        reloadGun = false;
+                        if (ui.imageReloading.fillAmount >= 1)
+                        {
+                            nothing = false;
+                            OptionGun.puliAll = OptionGun.puliAll - (OptionGun.bulletMax - OptionGun.bullet);
+                            OptionGun.bullet = OptionGun.bulletMax;
+                            ui.imageReloading.gameObject.SetActive(false);
+                            ui.imageReloading.fillAmount = 0;
+                            reloadGun = false;
+                        }
+
+                    }
+                    if (OptionGun.puliAll < OptionGun.bulletMax)
+                    {
+                        if (ui.imageReloading.fillAmount >= 1)
+                        {
+                           
+                            
+                                nothing = false;
+                                //OptionGun.bulletMax = OptionGun.puliAll;
+
+
+                                OptionGun.bullet += OptionGun.puliAll;
+                                OptionGun.puliAll -= OptionGun.puliAll;
+                                ui.imageReloading.gameObject.SetActive(false);
+                                ui.imageReloading.fillAmount = 0;
+                                reloadGun = false;
+                            
+                        }
+
+
+
                     }
 
 
 
+
+                    secReload = 0;
                 }
 
-
-
-
-                secReload = 0;
-            }
-
-
+            
 
 
         }
@@ -377,7 +382,7 @@ public class Gun_Zombie : MonoBehaviour
 
         ParticalAll.muzzleFlash.Play(); // - ЭФФЕКТ ВЫСТРЕЛА -
         
-        if (Physics.Raycast(Gun_Camera.transform.position, Gun_Camera.transform.forward, out RaycastHit hit_gun, range_gun = 100f))
+        if (Physics.Raycast(Gun_Camera.transform.position, Gun_Camera.transform.forward, out RaycastHit hit_gun, OptionGun.range_gun))
         {
 
             if (PlayerPrefs.HasKey("damage_gun_sale"))

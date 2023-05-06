@@ -12,7 +12,8 @@ public class AiDeathState : AiState
     public void Enter(AiAgent agent)
     {
         agent.ragdoll.ActivateRagdoll();
-        direction.y = 1;
+        direction.y = 6;
+        direction.x = -6;
         agent.ragdoll.ApplyForce(direction * agent.config.dieForce);
         agent.ui.gameObject.SetActive(false);
         agent.mesh.updateWhenOffscreen = true;

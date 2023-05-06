@@ -44,7 +44,7 @@ public class Health : MonoBehaviour
      public float blinkDuration;
     float blinkTimer;
 
-    float slizSpeed = 15.0f;
+    float slizSpeed = 50.0f;
 
     [HideInInspector] public int slizYellow;
 
