@@ -353,6 +353,7 @@ public class Gun_Zombie : MonoBehaviour
                         }
                         if (Input.GetMouseButtonUp(0))
                         {
+                            recoilGun.Reset();
                             animator.SetBool("Fire", false);
                             playerCamera.TPSMinimumFOV = OptionCamera.zoom;
                         }
@@ -419,6 +420,7 @@ public class Gun_Zombie : MonoBehaviour
     // - ПРОВЕРКА НА ПОПАДАНИЕ В ПРОТИВНИКА ------------------------------------* SHOOT() *--------------------------------------------
     void Shoot()
     {
+        
         recoilGun.playerCamera = playerCamera;
         recoilGun.GenerateRecoil();
         //anim_Gun.Play();// - АНИМАЦИЯ ПУШКИ - ОТДАЧА -
