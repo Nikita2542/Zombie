@@ -9,30 +9,48 @@ using UnityEngine.UI;
 
 public class WeaponWheelController : MonoBehaviour
 {
-    public OptionsScriptUI options;
-    public Gun_Zombie gunZombie;
 
-    public KeyCode key;
+
+    //[Header("Скрипты")]
+    [HideInInspector] public OptionsScriptUI options;
+    [HideInInspector] public GunOptionsMain gunMain;
+    [HideInInspector] public Gun_Zombie avtomatGun;
+    [HideInInspector] public Gun_Zombie pulemetGun;
+    [HideInInspector] public Gun_Zombie sniperGun;
     
-    public int weaponID;
-    private bool weaponWheelSelected = false;    
-    public float timeScale;
-    private float startTimeScale;
-    private float startFixedDeltaTime;
-    public int saleSlizz;
+    public KeyCode key;
+
+    [Header("Продажа")]
     public int saleAmmo;
+    public int saleSlizz;
+
     private int sliz_yellow;
     private float secundomer;
-    
-    public Animator anim;
-    public TextMeshProUGUI ammoText;
-    public Image cyrcleImage;
-    public GameObject mainFarmUI;
-    
-    public bool craftActive;
+    private float startTimeScale;
+    private float startFixedDeltaTime;
 
+    [HideInInspector] public Animator anim;
+    [HideInInspector] public TextMeshProUGUI ammoText;
+    [HideInInspector] public GameObject mainFarmUI;
+    [HideInInspector] public Image cyrcleImage;
+
+
+    [HideInInspector] public bool craftActive;
+    [HideInInspector] public float timeScale;
+    private bool weaponWheelSelected = false;
+    private bool activeCraft;
     public void Start()
-    {       
+    {
+        options = GameObject.FindGameObjectWithTag("Canvas").GetComponentInParent<OptionsScriptUI>();
+        gunMain = GameObject.FindGameObjectWithTag("Gun Main").GetComponentInParent<GunOptionsMain>();
+        avtomatGun = GameObject.FindGameObjectWithTag("Avtomat Main").GetComponentInParent<Gun_Zombie>();
+        pulemetGun = GameObject.FindGameObjectWithTag("Pulemet Main").GetComponentInParent<Gun_Zombie>();
+        sniperGun = GameObject.FindGameObjectWithTag("Sniper Main").GetComponentInParent<Gun_Zombie>();
+        ammoText = GameObject.FindGameObjectWithTag("Ammo Text").GetComponent<TextMeshProUGUI>();
+        mainFarmUI = GameObject.FindGameObjectWithTag("Farm Ammo");
+        cyrcleImage = GameObject.FindGameObjectWithTag("Image Cyrcle").GetComponent<Image>();
+        anim = GetComponent<Animator>();
+
         startTimeScale = Time.timeScale;
         startFixedDeltaTime = Time.fixedDeltaTime;
 
@@ -47,7 +65,7 @@ public class WeaponWheelController : MonoBehaviour
         if(options.activeOptions == false)
         {
             StopSlowMotion();
-            Debug.Log(Input.mousePosition);
+            
 
 
             if (Input.GetKey(key))
@@ -86,8 +104,63 @@ public class WeaponWheelController : MonoBehaviour
         {
             sliz_yellow = PlayerPrefs.GetInt("sliz_yellow");
         }
+        if (gunMain.gunActiv == true)
+        {
+            activeCraft = true;
+            CraftActivate();
+        }
+        if (gunMain.PulemetActiv == true)
+        {
+            
+            CraftActivate();
+        }
+        if (gunMain.sniperActiv == true)
+        {
+           
+            CraftActivate();
+        }
+
+        if (gunMain.gunActiv == true)
+        {
+            if(activeCraft == true)
+            {
+                secundomer = 0;
+                cyrcleImage.fillAmount = 0;
+            }
+            
+            
+
+        }
+        if (gunMain.PulemetActiv == true)
+        {
+            if (activeCraft == true)
+            {
+                secundomer = 0;
+                cyrcleImage.fillAmount = 0;
+            }
+
+        }
+        if (gunMain.sniperActiv == true)
+        {
+            if (activeCraft == true)
+            {
+                secundomer = 0;
+                cyrcleImage.fillAmount = 0;
+            }
+
+        }
+    }
+    
+       
+    
+    
+
+    public void CraftActivate()
+    {
+       
         if (craftActive == true)
         {
+            activeCraft = false;
             mainFarmUI.gameObject.SetActive(true);
             if (sliz_yellow >= saleSlizz)
             {
@@ -108,8 +181,23 @@ public class WeaponWheelController : MonoBehaviour
                     {
                         if (cyrcleImage.fillAmount >= 1f)
                         {
-                            gunZombie.OptionGun.puliAll += saleAmmo;
-                            sliz_yellow -= saleSlizz;
+                            if(gunMain.gunActiv == true)
+                            {
+                                avtomatGun.OptionGun.puliAll += saleAmmo;
+                                sliz_yellow -= saleSlizz;
+                            }
+                            if (gunMain.PulemetActiv == true)
+                            {
+                                pulemetGun.OptionGun.puliAll += saleAmmo;
+                                sliz_yellow -= saleSlizz;
+                            }
+                            if (gunMain.sniperActiv == true)
+                            {
+                                sniperGun.OptionGun.puliAll += saleAmmo;
+                                sliz_yellow -= saleSlizz;
+                            }
+
+
                             PlayerPrefs.SetInt("sliz_yellow", sliz_yellow);
                             cyrcleImage.fillAmount = 0;
                             secundomer = 0;

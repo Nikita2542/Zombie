@@ -18,6 +18,27 @@ TagManager:
   - Yaku_zombie
   - Armature
   - Hips
+  - Avtomat
+  - Pulemet
+  - Sniper
+  - Slizator
+  - Avtomat Text
+  - Pulemet Text
+  - Sniper Text
+  - Slizator Text
+  - Avtomat Main
+  - Pulemet Main
+  - Slizator Main
+  - Sniper Main
+  - Gun Main
+  - Canvas
+  - Ammo Text
+  - Farm Ammo
+  - Image Cyrcle
+  - Item Selected Text
+  - Image Back
+  - Weapon Wheel
+  - Input Text
   layers:
   - Default
   - TransparentFX

@@ -37,7 +37,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlfaClipMask:
-        m_Texture: {fileID: 2800000, guid: 1d9c0c9036ad7bf4b9406e4105480066, type: 3}
+        m_Texture: {fileID: 2800000, guid: c21980d13c256f44f90499316f72ef98, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: 148643aa49214df4b90c3cd6de865299, type: 2}
+        m_Texture: {fileID: 8400000, guid: c0127de847a77ad40a87b918c145f503, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

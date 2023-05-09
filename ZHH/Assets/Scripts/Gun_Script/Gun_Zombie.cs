@@ -56,7 +56,7 @@ public class Gun_Zombie : MonoBehaviour
 
     // - НАСТРОЙКА ОРУЖИЯ --------------------------------------------------------------------------------------------------------------
     
-    private GunOptionsMain gunOptionsMain;
+    public GunOptionsMain gunOptionsMain;
     [Header("Настройка оружия")]
     public OptionAvtomat OptionGun;
     [System.Serializable]
@@ -91,6 +91,8 @@ public class Gun_Zombie : MonoBehaviour
     {
         public Animation anim_Part;
         public ParticleSystem muzzleFlash;
+
+        public ParticleSystem Hite;
         public ParticleSystem nitro1;
         public ParticleSystem nitro2;
     }
@@ -110,12 +112,12 @@ public class Gun_Zombie : MonoBehaviour
 
         public AudioClip shotClip;
 
-        public GameObject prefabLastTarget;
+        
     }
 
     private AudioSource shotAudio;
    
-    private GameObject Last_TargetGO;
+    
 
     private float nextTimeToFire = 0f;
     
@@ -137,9 +139,10 @@ public class Gun_Zombie : MonoBehaviour
     }
     public void Start()
     {
+        ParticalAll.Hite.gameObject.SetActive(false);
         OptionGun.remNoScoup = 607;
         OptionGun.remScoup = 703;
-        gunOptionsMain = GetComponentInParent<GunOptionsMain>();
+        //gunOptionsMain = GameObject.FindGameObjectWithTag("Gun Main").GetComponentInParent<GunOptionsMain>();
         
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -347,11 +350,11 @@ public class Gun_Zombie : MonoBehaviour
                             nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
                             Shoot();
                         }
-                        if (Input.GetMouseButtonDown(0))
+                        if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
                         {
                             playerCamera.TPSMinimumFOV = OptionCamera.recoil;
                         }
-                        if (Input.GetMouseButtonUp(0))
+                        if (Input.GetMouseButtonUp(0) && Time.time >= nextTimeToFire)
                         {
                             recoilGun.Reset();
                             animator.SetBool("Fire", false);
@@ -386,12 +389,14 @@ public class Gun_Zombie : MonoBehaviour
                             nextTimeToFire = Time.time + 1f / OptionGun.fireRate;
                             Shoot();
                         }
-                        if (Input.GetMouseButtonDown(0))
+                        if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
                         {
+                            
                             playerCamera.TPSMinimumFOV = OptionCamera.recoilScoup;
                         }
-                        if (Input.GetMouseButtonUp(0))
+                        if (Input.GetMouseButtonUp(0) && Time.time >= nextTimeToFire)
                         {
+                            
                             playerCamera.TPSMinimumFOV = OptionCamera.zoomScoup;
                         }
                     }
@@ -455,13 +460,17 @@ public class Gun_Zombie : MonoBehaviour
                 // - СИЛА ПАТРОНА К ОБЬЕКТАМ -
                 hit_gun.rigidbody.AddForce(-hit_gun.normal * OptionGun.Last_TargetForce);
             }
-            if (ui.prefabLastTarget != null)
-            {
+            
+                ParticalAll.Hite.gameObject.SetActive(true);
+                ParticalAll.Hite.transform.position = hit_gun.point;
+                ParticalAll.Hite.transform.forward = hit_gun.normal;
+                ParticalAll.Hite.Emit(1);
                 // - ПОСЛЕДНИЕ ПОПАДАНИЕ - ЭФФЕКТ -
-                Last_TargetGO = Instantiate(ui.prefabLastTarget, hit_gun.point, Quaternion.LookRotation(hit_gun.normal));
-            }
+                //Last_TargetGO = Instantiate(ui.prefabLastTarget, hit_gun.point, Quaternion.LookRotation(hit_gun.normal));
+                
+            
 
-            Destroy(Last_TargetGO.gameObject, 0.1f);
+            //Destroy(Last_TargetGO.gameObject, 0.1f);
         }
 
     }

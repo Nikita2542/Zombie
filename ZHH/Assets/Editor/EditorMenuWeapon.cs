@@ -1,6 +1,6 @@
 using UnityEditor;
 
-[CustomEditor(typeof(WeaponWheelController))]
+
 public class EditorMenuWeapon : Editor
 {
 

@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,14 @@ using UnityEngine;
 public class WeaponRecoil : MonoBehaviour
 {
     [HideInInspector] public RCC_Camera playerCamera;
+    
+    //[Header("Горизонтальная отдача")]
+    //public float[] recoilPattern;
 
-    public float[] recoilPattern;
+    [Header("Вертикальная отдача")]
     public float verticalRecoil;
-    [HideInInspector] public float horizontalRecoil;
-    public float horizontalRange = 5;
+    //[HideInInspector] public float horizontalRecoil;
+    [Header("Время отдачи")]
     public float duration;
     public float durationTime;
 
@@ -17,6 +21,11 @@ public class WeaponRecoil : MonoBehaviour
     float timeDur;
 
     int index;
+
+    private void Awake()
+    {
+        
+    }
     public void Start()
     {
        
@@ -28,19 +37,20 @@ public class WeaponRecoil : MonoBehaviour
         index = 0;
     }
 
-    int NextIndex(int index)
+    /*int NextIndex(int index)
     {
         return (index + 1) % recoilPattern.Length;
-    }
+    }*/
     public void GenerateRecoil()
     {
         time = duration;
 
 
-        horizontalRecoil = recoilPattern[index];
-        
+        //horizontalRecoil = recoilPattern[index];
 
-        index = NextIndex(index);
+
+        //index = NextIndex(index);
+        
     }
     
 
@@ -50,17 +60,24 @@ public class WeaponRecoil : MonoBehaviour
         if(time > 0)
         {
             playerCamera.orbitY -= ((verticalRecoil / 100) * Time.deltaTime) / duration;
-            playerCamera.orbitX -= ((horizontalRecoil / 10) * Time.deltaTime) / duration;
-            timeDur = durationTime;
+            //playerCamera.orbitX -= ((horizontalRecoil / 10) * Time.deltaTime) / duration;
+            
+                timeDur = durationTime;
+            
+            
             time -= Time.deltaTime;
             
         }
-        if (timeDur > 0)
+        if (time <= 0)
         {
-            playerCamera.orbitY += ((verticalRecoil / 100) * Time.deltaTime) / durationTime/2;
-            playerCamera.orbitX += ((horizontalRecoil / 10) * Time.deltaTime) / durationTime/2;
-            timeDur -= Time.deltaTime;
+            if (timeDur > 0)
+            {
+                playerCamera.orbitY += ((verticalRecoil / 100) * Time.deltaTime) / durationTime;
+                //playerCamera.orbitX += ((horizontalRecoil / 10) * Time.deltaTime) / durationTime;
+                timeDur -= Time.deltaTime;
+            }
         }
+            
 
 
     }

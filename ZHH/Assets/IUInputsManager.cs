@@ -7,13 +7,13 @@ using UnityEngine.InputSystem;
 
 public class IUInputsManager : MonoBehaviour
 {
-    public WeaponWheelController Weapon;
-    private bool Active = false;
-
+    [HideInInspector]public WeaponWheelController Weapon;
     public TextMeshProUGUI inputText;
-    
+    private bool Active = false;
     void Start()
     {
+        
+        Weapon = GetComponentInChildren<WeaponWheelController>();
         inputText.text = Weapon.key.ToString();
     }
 

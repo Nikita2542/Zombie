@@ -5,27 +5,25 @@ using Unity.VisualScripting;
 
 public class WeaponWheelButtonController : MonoBehaviour
 {
-    [Header("ID")]
+    
     public int ID;
     public string itemName;
+    public GameObject FarmUI;
+    public GameObject itemGameObj;
+    public float distantFarm;
 
-    [Header("Главный Текст")]
-    public TextMeshProUGUI itemText;
-    [Header("Главный заднее изображение")]
-    public Image ImageBack;
+    //[Header("Дистанция текста от края")]
+    [HideInInspector] public float distantText = 300;
+    //[Header("Дистанция изображение от края")]
+    [HideInInspector] public float distantImage = 1;
 
-    [Header("Скрипты")]
-    public GunOptionsMain gunMain;
-  
-    [Header("Иконка")]
-    public Sprite icon;
+    //[Header("Главный Текст")]
+    [HideInInspector] public TextMeshProUGUI itemText;
+    //[Header("Главный заднее изображение")]
+    [HideInInspector] public Image ImageBack;
+    //[Header("Скрипты")]
+    [HideInInspector] public GunOptionsMain gunMain;
 
-    public Image selectedItem;
-
-    [Header("Дистанция текста от края")]
-    public float distantText;
-    [Header("Дистанция изображение от края")]
-    public float distantImage;
     [HideInInspector] public WeaponWheelController ammo;
     [HideInInspector] private Animator anim;
     [HideInInspector] public bool selected = false;
@@ -33,8 +31,12 @@ public class WeaponWheelButtonController : MonoBehaviour
     
     void Start()
     {
-         
-         ammo = GetComponentInParent<WeaponWheelController>();
+        distantText = 300;
+        distantImage = 1;
+        gunMain = GameObject.FindGameObjectWithTag("Gun Main").GetComponentInParent<GunOptionsMain>();
+        ImageBack = GameObject.FindGameObjectWithTag("Image Back").GetComponent<Image>();
+        itemText = GameObject.FindGameObjectWithTag("Item Selected Text").GetComponent<TextMeshProUGUI>();
+        ammo = GetComponentInParent<WeaponWheelController>();
          anim = GetComponent<Animator>();
         
     }
@@ -53,34 +55,42 @@ public class WeaponWheelButtonController : MonoBehaviour
         {
             if (ID == 1)
             {
+                FarmUI.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantFarm, gameObject.transform.position.y, gameObject.transform.position.z);
                 ImageBack.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantImage, gameObject.transform.position.y, gameObject.transform.position.z);
-                itemText.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantText, gameObject.transform.position.y, gameObject.transform.position.z);
-                selectedItem.sprite = icon;
+                itemText.gameObject.transform.position = new Vector3(itemGameObj.gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);              
                 ActivateGun();
+                ActivateCraft();
             }
             if (ID == 2)
             {
+                
                 ImageBack.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantImage, gameObject.transform.position.y, gameObject.transform.position.z);
-                itemText.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantText, gameObject.transform.position.y, gameObject.transform.position.z);
+                itemText.gameObject.transform.position = new Vector3(itemGameObj.gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 ActivateSlizator();
+                
             }
             if(ID == 3)
             {
+                FarmUI.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantFarm, gameObject.transform.position.y, gameObject.transform.position.z);
                 ImageBack.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantImage, gameObject.transform.position.y, gameObject.transform.position.z);
-                itemText.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantText, gameObject.transform.position.y, gameObject.transform.position.z);
+                itemText.gameObject.transform.position = new Vector3(itemGameObj.gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 ActivateCraft();
             }
             if (ID == 4)
             {
+                FarmUI.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantFarm, gameObject.transform.position.y, gameObject.transform.position.z);
                 ImageBack.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantImage, gameObject.transform.position.y, gameObject.transform.position.z);
-                itemText.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantText, gameObject.transform.position.y, gameObject.transform.position.z);
+                itemText.gameObject.transform.position = new Vector3(itemGameObj.gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 ActivatePulemet();
+                ActivateCraft();
             }
             if (ID == 5)
             {
+                FarmUI.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantFarm, gameObject.transform.position.y, gameObject.transform.position.z);
                 ImageBack.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantImage, gameObject.transform.position.y, gameObject.transform.position.z);
-                itemText.gameObject.transform.position = new Vector3(gameObject.transform.position.x - distantText, gameObject.transform.position.y, gameObject.transform.position.z);
+                itemText.gameObject.transform.position = new Vector3(itemGameObj.gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 ActivateSniper();
+                ActivateCraft();
             }
         }
         
@@ -136,12 +146,24 @@ public class WeaponWheelButtonController : MonoBehaviour
     public void ActivateCraft()
     {
         ammo.craftActive = true;
-        gunMain.gunActiv = true;
+        
+        if(gunMain.gunActiv == true)
+        {
+            gunMain.gunActiv = true;
+        }
+        if (gunMain.PulemetActiv == true)
+        {
+            gunMain.PulemetActiv = true;
+        }
+        if (gunMain.sniperActiv == true)
+        {
+            gunMain.sniperActiv = true;
+        }
 
         // - False -
         gunMain.slizatorActiv = false; 
-        gunMain.PulemetActiv = false;
-        gunMain.sniperActiv = false;
+        
+        
     }
     public void ActivatePulemet()
     {

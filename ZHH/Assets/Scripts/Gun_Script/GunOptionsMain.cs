@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class GunOptionsMain : MonoBehaviour
 {
-    [Header("Оружие")]
-    public GameObject[] gunAll;
-    [Header("Текст")]
-    public GameObject[] textGun;
+    //[Header("Оружие")]
+     public GameObject[] gunAll;
 
-    [Header("Скрипт для автомата")]
-    public Gun_Zombie avtomatZombie;
-    [Header("Скрипт для пулемета")]
-    public Gun_Zombie pulemetZombie ;
-    [Header("Скрипт для снайперки")]
-    public Gun_Zombie sniperZombie;
+    //[Header("Текст")]
+    [HideInInspector] public GameObject[] textGun;
+
+    //[Header("Скрипт для автомата")]
+    [HideInInspector] public Gun_Zombie avtomatZombie;
+    //[Header("Скрипт для пулемета")]
+    [HideInInspector] public Gun_Zombie pulemetZombie ;
+    //[Header("Скрипт для снайперки")]
+    [HideInInspector] public Gun_Zombie sniperZombie;
 
     [HideInInspector] public bool gunAvtomat;
     [HideInInspector] public bool gunSlizator;
@@ -30,15 +31,32 @@ public class GunOptionsMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // - Надодит обьекты по тэгу -
+        gunAll[0] = GameObject.FindGameObjectWithTag("Avtomat");
+        gunAll[1] = GameObject.FindGameObjectWithTag("Slizator");
+        gunAll[2] = GameObject.FindGameObjectWithTag("Pulemet");
+        gunAll[3] = GameObject.FindGameObjectWithTag("Sniper");
+        // - Надодит обьекты по тэгу -
+        textGun[0] = GameObject.FindGameObjectWithTag("Avtomat Text");
+        textGun[1] = GameObject.FindGameObjectWithTag("Slizator Text");
+        textGun[2] = GameObject.FindGameObjectWithTag("Pulemet Text");
+        textGun[3] = GameObject.FindGameObjectWithTag("Sniper Text");
+        // - Обращается к родителю обьекта на котором скрипт -
+        avtomatZombie = gunAll[0].GetComponentInParent<Gun_Zombie>();
+        pulemetZombie = gunAll[2].GetComponentInParent<Gun_Zombie>();
+        sniperZombie = gunAll[3].GetComponentInParent<Gun_Zombie>();
+
         textGun[0].SetActive(true);
         textGun[1].SetActive(false);
         textGun[2].SetActive(false);
         textGun[3].SetActive(false);
+
         gunAll[0].gameObject.SetActive(true);
         gunAll[1].gameObject.SetActive(false);
         gunAll[2].gameObject.SetActive(false);
         gunAll[3].gameObject.SetActive(false);
-        gunAvtomat = false;
+
+        gunAvtomat = true;
         gunSlizator = false;
         gunPulemet = false;
         gunSniper = false;
