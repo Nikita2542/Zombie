@@ -17,6 +17,13 @@ public class GunOptionsMain : MonoBehaviour
     //[Header("Скрипт для снайперки")]
     [HideInInspector] public Gun_Zombie sniperZombie;
 
+    //[Header("Скрипт для автомата")]
+    [HideInInspector] public WeaponRecoil avtomatRecoil;
+    //[Header("Скрипт для пулемета")]
+    [HideInInspector] public WeaponRecoil pulemetRecoil;
+    //[Header("Скрипт для снайперки")]
+    [HideInInspector] public WeaponRecoil sniperRecoil;
+
     [HideInInspector] public bool gunAvtomat;
     [HideInInspector] public bool gunSlizator;
     [HideInInspector] public bool gunPulemet;
@@ -45,6 +52,11 @@ public class GunOptionsMain : MonoBehaviour
         avtomatZombie = gunAll[0].GetComponentInParent<Gun_Zombie>();
         pulemetZombie = gunAll[2].GetComponentInParent<Gun_Zombie>();
         sniperZombie = gunAll[3].GetComponentInParent<Gun_Zombie>();
+
+        // - Обращается к родителю обьекта на котором скрипт -
+        avtomatRecoil = gunAll[0].GetComponentInParent<WeaponRecoil>();
+        pulemetRecoil = gunAll[2].GetComponentInParent<WeaponRecoil>();
+        sniperRecoil = gunAll[3].GetComponentInParent<WeaponRecoil>();
 
         textGun[0].SetActive(true);
         textGun[1].SetActive(false);
@@ -76,6 +88,14 @@ public class GunOptionsMain : MonoBehaviour
             avtomatZombie.enabled = true;
             pulemetZombie.enabled = false;
             sniperZombie.enabled = false;
+
+            avtomatRecoil.enabled = true;
+            pulemetRecoil.enabled = false;
+            sniperRecoil.enabled = false;
+            
+            
+
+
             gunAll[0].gameObject.SetActive(true);
             textGun[0].gameObject.SetActive(true);
 
@@ -119,6 +139,13 @@ public class GunOptionsMain : MonoBehaviour
             avtomatZombie.enabled = false;
             pulemetZombie.enabled = true;
             sniperZombie.enabled = false;
+
+            avtomatRecoil.enabled = false;
+            pulemetRecoil.enabled = true;
+            sniperRecoil.enabled = false;
+            
+                
+
             gunAll[2].gameObject.SetActive(true);
             textGun[2].gameObject.SetActive(true);
 
@@ -144,7 +171,13 @@ public class GunOptionsMain : MonoBehaviour
             //- Скрипт - False ---------------------------
             avtomatZombie.enabled = false;
             pulemetZombie.enabled = false;
+
+            avtomatRecoil.enabled = false;
+            pulemetRecoil.enabled = false;
+            sniperRecoil.enabled = true;
             
+                
+
             //- Объект - TRUE ---------------------------
             gunAll[3].gameObject.SetActive(true);      
 

@@ -39,6 +39,7 @@ TagManager:
   - Image Back
   - Weapon Wheel
   - Input Text
+  - Head
   layers:
   - Default
   - TransparentFX
@@ -47,15 +48,15 @@ TagManager:
   - Water
   - UI
   - Grass
-  - PostProcessing
+  - 
   - RCC
   - RCC_WheelCollider
   - RCC_DetachablePart
   - RCC_Trailer
   - RCC_Crasher
-  - PostProccesing
-  - RenderOnTop
   - 
+  - RenderOnTop
+  - RenderScoup
   - 
   - 
   - 

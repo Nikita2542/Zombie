@@ -7,17 +7,17 @@ using Unity.VisualScripting;
 
 public class Gun_Zombie : MonoBehaviour
 {
-
+    // - Доделать!
+    
+    private enum GunType { Avtomat, Pulemet, Sniper}
+    [Header("Доделай")]
+    [SerializeField]GunType gunType;
     // - НАСТРОЙКА КАМЕРЫ --------------------------------------------------------------------------------------------------------------
     [Header("Урон оружия")]
     public float damage_gun = 20;
     [Header("Настройка камера")]
-
     public RCC_Camera playerCamera;
-
     public WeaponRecoil recoilGun;
-
-
     public Camera Gun_Camera;
     public OptionGunAvtomat OptionCamera;
     [System.Serializable]
@@ -47,13 +47,6 @@ public class Gun_Zombie : MonoBehaviour
         public bool openGun;
         public bool openScope;
     }
-
-
-
-
-
-
-
     // - НАСТРОЙКА ОРУЖИЯ --------------------------------------------------------------------------------------------------------------
     
     public GunOptionsMain gunOptionsMain;
@@ -80,7 +73,6 @@ public class Gun_Zombie : MonoBehaviour
    
     Ray ray;
     private float secReload;
-    
     private bool nothing;
 
     // - ДРУГОЕ ----------------------------------------------------------------------------------------------------------------------------------
@@ -110,22 +102,12 @@ public class Gun_Zombie : MonoBehaviour
         public GameObject rem;
         public Image imageReloading;
 
-        public AudioClip shotClip;
-
-        
+        public AudioClip shotClip;   
     }
 
     private AudioSource shotAudio;
-   
-    
-
     private float nextTimeToFire = 0f;
-    
-    
-  
     private Vector3 directionOn;
-    
-
     private Animator animator;
     [HideInInspector]
     public bool reloadGun;
@@ -139,7 +121,7 @@ public class Gun_Zombie : MonoBehaviour
     }
     public void Start()
     {
-        ParticalAll.Hite.gameObject.SetActive(false);
+        //ParticalAll.Hite.gameObject.SetActive(false);
         OptionGun.remNoScoup = 607;
         OptionGun.remScoup = 703;
         //gunOptionsMain = GameObject.FindGameObjectWithTag("Gun Main").GetComponentInParent<GunOptionsMain>();
@@ -149,18 +131,15 @@ public class Gun_Zombie : MonoBehaviour
         ui.imageReloading.fillAmount = 0;
         ui.imageReloading.gameObject.SetActive(false);
         OptionGun.bullet = OptionGun.bulletMax;
-        
-        
-
+ 
         OptionCamera.openGun = true;
         OptionCamera.openScope = false;
 
         shotAudio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
 
-        // - ЗАДАЕТ ДЭФОЛТНЫЕ НАСТРОЙКИ КАМЕРЫ -
+        // - ЗАДАЕТ ДЭФОЛТНЫЕ НАСТРОЙКИ КАМЕРЫ -   
         ModedeDefault();
-
         if (PlayerPrefs.HasKey("damage_gun_sale"))
         {
             damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
@@ -189,13 +168,10 @@ public class Gun_Zombie : MonoBehaviour
                 {
                     reloadGun = true;
                 }
-            }
-            
-            
+            }  
         }
         if (OptionGun.bullet <= 0)
-        {
-            
+        {          
             if (OptionGun.puliAll > 0)
             {
                 if (OptionGun.bullet < OptionGun.bulletMax)
@@ -208,40 +184,31 @@ public class Gun_Zombie : MonoBehaviour
         // - ПЕРЕЗАРЯДКА - ЗАКОНЧИЛИСЬ ПУЛИ -
         if(reloadGun == true)
         {
-            
-                reload = true;
-                if (secReload <= OptionGun.reloading)
+            reload = true;
+            if (secReload <= OptionGun.reloading)
+            {
+                if (OptionGun.puliAll >= 0)
                 {
-                    if (OptionGun.puliAll >= 0)
+                    secReload += Time.deltaTime;
+                    ui.imageReloading.gameObject.SetActive(true);
+                    if (ui.imageReloading.fillAmount < 1)
                     {
-                        secReload += Time.deltaTime;
-                        ui.imageReloading.gameObject.SetActive(true);
-                        if (ui.imageReloading.fillAmount < 1)
-                        {
-                            ui.imageReloading.fillAmount += Time.deltaTime / OptionGun.reloading;
-                        }
+                        ui.imageReloading.fillAmount += Time.deltaTime / OptionGun.reloading;
                     }
-
                 }
-                if (secReload >= OptionGun.reloading)
+
+            }
+            if (secReload >= OptionGun.reloading)
+            {
+
+                if (ui.imageReloading.fillAmount >= 1)
                 {
+                    nothing = false;
 
-                    //if (OptionGun.puliAll > OptionGun.bulletMax)
-                   // {
-
-
-                        if (ui.imageReloading.fillAmount >= 1)
-                        {
-                            nothing = false;
-                            
-                    if (OptionGun.puliAll<=OptionGun.bulletMax)
+                    if (OptionGun.puliAll <= OptionGun.bulletMax)
                     {
-                        
-
-
-                        
                         int s = OptionGun.puliAll + OptionGun.bullet;
-                        if (s > OptionGun.bulletMax) 
+                        if (s > OptionGun.bulletMax)
                         {
                             int m = (OptionGun.puliAll + OptionGun.bullet) - OptionGun.bulletMax;
                             int p = ((OptionGun.puliAll + OptionGun.bullet) - OptionGun.bulletMax);
@@ -253,8 +220,6 @@ public class Gun_Zombie : MonoBehaviour
                             int p = (OptionGun.bulletMax - (OptionGun.puliAll + OptionGun.bullet));
                             OptionGun.bullet = OptionGun.bulletMax - p;
                             OptionGun.puliAll = 0;
-
-
                         }
                     }
                     if (OptionGun.puliAll >= OptionGun.bulletMax)
@@ -262,49 +227,16 @@ public class Gun_Zombie : MonoBehaviour
                         OptionGun.puliAll = OptionGun.puliAll - (OptionGun.bulletMax - OptionGun.bullet);
                         OptionGun.bullet = (OptionGun.bulletMax - OptionGun.bullet) + OptionGun.bullet;
                     }
-
-
                     ui.imageReloading.gameObject.SetActive(false);
-                            ui.imageReloading.fillAmount = 0;
-                            reloadGun = false;
-                        }
+                    ui.imageReloading.fillAmount = 0;
+                    reloadGun = false;
 
-                   // }
-                    /*if (OptionGun.puliAll < OptionGun.bulletMax)
-                    {
-                        if (ui.imageReloading.fillAmount >= 1)
-                        {
-                           
-                            
-                                nothing = false;
-                                //OptionGun.bulletMax = OptionGun.puliAll;
-
-
-                                OptionGun.bullet += OptionGun.puliAll;
-                                OptionGun.puliAll -= OptionGun.puliAll;
-                                ui.imageReloading.gameObject.SetActive(false);
-                                ui.imageReloading.fillAmount = 0;
-                                reloadGun = false;
-                            
-                        }*/
-
-
-
-                    
-
-
-
-
-                    secReload = 0;
                 }
-
-            
-
-
+                secReload = 0;
+            }
         }
         if(reloadGun == false)
-        {
-           
+        {        
             reload = false;
         }
         
@@ -372,9 +304,10 @@ public class Gun_Zombie : MonoBehaviour
             if (OptionCamera.openScope == true)
             {
                 playerCamera.TPSHeight = OptionCamera.height;
+          
                 SliderSensitivityScoup();
                 ModeOpenScope();
-
+ 
                 // - ПЕРЕЗАРЯДКА ПРОШЛА -
                 if (nothing == false)
                 {
@@ -401,12 +334,8 @@ public class Gun_Zombie : MonoBehaviour
                         }
                     }
                 }
-
-
             }
         }
-            
-
         // - ДОРАБОАТЬ ЭФФЕКТ УСКОРЕНИЯ АВТОМОБИЛЯ -
 
         if (Input.GetKey(KeyCode.F))
@@ -423,9 +352,8 @@ public class Gun_Zombie : MonoBehaviour
 
 
     // - ПРОВЕРКА НА ПОПАДАНИЕ В ПРОТИВНИКА ------------------------------------* SHOOT() *--------------------------------------------
-    void Shoot()
+    private void Shoot()
     {
-        
         recoilGun.playerCamera = playerCamera;
         recoilGun.GenerateRecoil();
         //anim_Gun.Play();// - АНИМАЦИЯ ПУШКИ - ОТДАЧА -
@@ -436,15 +364,17 @@ public class Gun_Zombie : MonoBehaviour
         
         if (Physics.Raycast(Gun_Camera.transform.position, Gun_Camera.transform.forward, out RaycastHit hit_gun, OptionGun.range_gun))
         {
+            //ParticalAll.Hite.gameObject.SetActive(true);
+            ParticalAll.Hite.transform.position = hit_gun.point;
+            ParticalAll.Hite.transform.forward = hit_gun.normal;
+            ParticalAll.Hite.Emit(1);
 
             if (PlayerPrefs.HasKey("damage_gun_sale"))
             {
                damage_gun = PlayerPrefs.GetInt("damage_gun_sale");
             }
-            Debug.Log(hit_gun.transform.name);
-           
-            
-
+            //Debug.Log(hit_gun.transform.name);
+  
             if (hit_gun.transform.TryGetComponent<MainZombieScript>(out var MainZombieScript))
             {
                 // - ВОЗВРАЩАЕТ DAMAGE К ПРОТИВНИКУ -
@@ -459,20 +389,8 @@ public class Gun_Zombie : MonoBehaviour
             {
                 // - СИЛА ПАТРОНА К ОБЬЕКТАМ -
                 hit_gun.rigidbody.AddForce(-hit_gun.normal * OptionGun.Last_TargetForce);
-            }
-            
-                ParticalAll.Hite.gameObject.SetActive(true);
-                ParticalAll.Hite.transform.position = hit_gun.point;
-                ParticalAll.Hite.transform.forward = hit_gun.normal;
-                ParticalAll.Hite.Emit(1);
-                // - ПОСЛЕДНИЕ ПОПАДАНИЕ - ЭФФЕКТ -
-                //Last_TargetGO = Instantiate(ui.prefabLastTarget, hit_gun.point, Quaternion.LookRotation(hit_gun.normal));
-                
-            
-
-            //Destroy(Last_TargetGO.gameObject, 0.1f);
+            }          
         }
-
     }
 
     // - ДЭФОЛТНЫЕ НАСТРОЙКИ КАМЕРЫ ----------------------------------------------------------*MODeDEFAULT*---------------------------------------- 
@@ -482,11 +400,12 @@ public class Gun_Zombie : MonoBehaviour
         OptionCamera.distans = 6;
 
         OptionCamera.zoomScoup = 20;
-        
 
-       
-
-        ui.sliderSensitivityScoup.value = OptionCamera.sensitivityScope;
+        if (gunOptionsMain.sniperActiv == false)
+        {
+            ui.sliderSensitivityScoup.value = OptionCamera.sensitivityScope;
+        }
+            
         ui.sliderSensitivity.value = OptionCamera.sensitivity;
         playerCamera.TPSHeight = OptionCamera.height;
     }
@@ -510,9 +429,12 @@ public class Gun_Zombie : MonoBehaviour
         playerCamera.minOrbitY = OptionCamera.minOrbitYScoup;
         playerCamera.maxOrbitY = OptionCamera.maxOrbitYScoup;
 
-        playerCamera.orbitYSpeed = OptionCamera.sensitivityScope;
-        playerCamera.orbitXSpeed = OptionCamera.sensitivityScope;
-        
+        if (gunOptionsMain.sniperActiv == false)
+        {
+            playerCamera.orbitYSpeed = OptionCamera.sensitivityScope;
+            playerCamera.orbitXSpeed = OptionCamera.sensitivityScope;
+        }
+     
         playerCamera.TPSMinimumFOV = OptionCamera.zoomScoup;
         playerCamera.TPSDistance = OptionCamera.distansScoup;        
     }
@@ -520,7 +442,10 @@ public class Gun_Zombie : MonoBehaviour
     // - НАСТРОЙКИ ЧУВСТВИТЕЛЬНОСТИ В ИГРЕ ------------------------------------------------*SLIDErSENSITIVITySCOUP*--------------------
     public void SliderSensitivityScoup()
     {
-        OptionCamera.sensitivityScope = ui.sliderSensitivityScoup.value;
+        if (gunOptionsMain.sniperActiv == false)
+        {
+            OptionCamera.sensitivityScope = ui.sliderSensitivityScoup.value;
+        }          
     }
     public void SliderSensitivity()
     {
