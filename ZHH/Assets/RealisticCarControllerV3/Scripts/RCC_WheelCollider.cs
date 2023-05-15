@@ -334,7 +334,9 @@ public class RCC_WheelCollider : RCC_Core {
 
         // Return if RCC is disabled.
         if (!CarController.enabled)
+        {
             return;
+        }
 
         // Setting position and rotation of the wheel model.
         if (alignWheel)
