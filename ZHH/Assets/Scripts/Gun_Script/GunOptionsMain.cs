@@ -38,12 +38,12 @@ public class GunOptionsMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // - Надодит обьекты по тэгу -
+        // - Находит обьекты по тэгу -
         gunAll[0] = GameObject.FindGameObjectWithTag("Avtomat");
         gunAll[1] = GameObject.FindGameObjectWithTag("Slizator");
         gunAll[2] = GameObject.FindGameObjectWithTag("Pulemet");
         gunAll[3] = GameObject.FindGameObjectWithTag("Sniper");
-        // - Надодит обьекты по тэгу -
+        // - Находит обьекты по тэгу -
         textGun[0] = GameObject.FindGameObjectWithTag("Avtomat Text");
         textGun[1] = GameObject.FindGameObjectWithTag("Slizator Text");
         textGun[2] = GameObject.FindGameObjectWithTag("Pulemet Text");

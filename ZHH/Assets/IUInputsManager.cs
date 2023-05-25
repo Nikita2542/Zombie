@@ -9,7 +9,7 @@ public class IUInputsManager : MonoBehaviour
 {
     [HideInInspector]public WeaponWheelController Weapon;
     public TextMeshProUGUI inputText;
-    private bool Active = false;
+    private bool Active = false; 
     void Start()
     {
         

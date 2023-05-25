@@ -64,13 +64,13 @@ public class WeaponWheelController : MonoBehaviour
     {
         if(options.activeOptions == false)
         {
-            StopSlowMotion();
+           // StopSlowMotion();
             
 
 
             if (Input.GetKey(key))
             {
-                StartSlowMotion();
+               // StartSlowMotion();
                 weaponWheelSelected = true;
                 
                 
@@ -83,14 +83,14 @@ public class WeaponWheelController : MonoBehaviour
             
             if (Input.GetKeyUp(key))
             {              
-                StopSlowMotion();
+              //  StopSlowMotion();
                 weaponWheelSelected = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
         if(options.activeOptions == true)
         {
-            StartSlowMotion();
+            //StartSlowMotion();
         }
         if (weaponWheelSelected)
         {
