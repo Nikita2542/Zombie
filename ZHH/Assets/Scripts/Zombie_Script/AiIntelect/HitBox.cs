@@ -28,12 +28,17 @@ public class HitBox : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {
-            if(agent.speedometr.speedCAR > 20)
+        {    
+            if(agent.speedometr.speedCAR > 20f)
             {
-                agent.mainCar = true;
+               if(agent.death == false)
+                {
+                    agent.mainCar = true;
+                    agent._isAttack = false;
+                }
+               
             }
-            
+          
         }
     }
 }

@@ -9,11 +9,11 @@ public class Slizator : MonoBehaviour
 {
     GunOptionsMain GunOptionsMain;
     
-    public Text sliz_yellow_text;
+    public Text sokGreenText;
  
     public ParticleSystem slizat_part;
  
-    private int sliz_yellow_main;
+    private int sokGreen;
     private int sliz_green_main;
     private int slizator_true;
 
@@ -41,14 +41,14 @@ public class Slizator : MonoBehaviour
     }
     public void Update()
     {
-        if (PlayerPrefs.HasKey("sliz_yellow"))
+        if (PlayerPrefs.HasKey("sokGreen"))
         {
-            sliz_yellow_main = PlayerPrefs.GetInt("sliz_yellow");
+            sokGreen = PlayerPrefs.GetInt("sokGreen");
         }
-        sliz_yellow_text.text = sliz_yellow_main.ToString();
+        sokGreenText.text = sokGreen.ToString();
         if (GunOptionsMain.gunSlizator == true)
         {
-            if(Material.matSlizator.Length <= sliz_yellow_main)
+            if(Material.matSlizator.Length <= sokGreen)
             {
                 for (int i = 0; i < Material.matSlizator.Length; i++)
                 {
@@ -88,7 +88,7 @@ public class Slizator : MonoBehaviour
         
         
 
-        PlayerPrefs.SetInt("sliz_yellow_main", sliz_yellow_main);
+        PlayerPrefs.SetInt("sokGreen", sokGreen);
         PlayerPrefs.SetInt("sliz_green_main", sliz_green_main);
 
         PlayerPrefs.Save();

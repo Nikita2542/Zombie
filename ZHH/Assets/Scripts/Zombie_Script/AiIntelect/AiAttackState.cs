@@ -19,33 +19,40 @@ public class AiAttackState : AiState
 
     public void Update(AiAgent agent)
     {
+        
+       
+            
+                if (agent.ActiveAttack == true)
+                {
+                    if (agent.playerHealth.playerHealth > 0)
+                    {
+                        if (agent.secondPlayer < agent.damagePeriod)
+                        {
 
+                            agent.secondPlayer += Time.deltaTime;
+                        }
+                        if (agent.secondPlayer > agent.damagePeriod)
+                        {
+                            agent.animator.SetTrigger("Attack");
+                            agent.playerHealth.playerHealth -= agent.config.damageEnemy;
+                            agent.secondPlayer = 0;
 
-
-        if(agent.ActiveAttack == true)
-        {
-            if (agent.playerHealth.playerHealth > 0)
-            {
-                if (agent.secondPlayer < agent.damagePeriod)
+                        }
+                    }
+                }
+                else              
                 {
 
-                    agent.secondPlayer += Time.deltaTime;
-                }
-                if (agent.secondPlayer > agent.damagePeriod)
-                {
-                    agent.animator.SetTrigger("Attack");
-                    agent.playerHealth.playerHealth -= agent.config.damageEnemy;
-                    agent.secondPlayer = 0;
-                    
-                }
-            }
-        }
-        if(agent.ActiveAttack == false)
-        {
-            agent.animator.SetTrigger("IdleAttack");
-            agent.stateMachine.ChangeState(AiStateId.Idle);
+                    agent.animator.SetTrigger("IdleAttack");
+                   // agent.stateMachine.ChangeState(AiStateId.ChasePlayer);
+                    agent.stateMachine.ChangeState(AiStateId.Idle);
 
-        }
+                }
+            
+            
+        
+        
+       
             
 
         

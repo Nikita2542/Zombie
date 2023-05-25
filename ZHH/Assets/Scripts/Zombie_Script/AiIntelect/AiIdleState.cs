@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static RCC_Recorder;
+using UnityEngine.AI;
 
 public class AiIdleState : AiState
 {
@@ -14,23 +16,55 @@ public class AiIdleState : AiState
     }
     public void Update(AiAgent agent)
     {
-        Vector3 playerDirection = agent.playerTransform.position - agent.transform.position;
-        if(playerDirection.magnitude < agent.config.maxSightDistance)
+
+        
+        agent._isAttack = Physics.CheckSphere(agent.transform.position, agent.RadiusAttackCurrent, agent._layerPlayer);
+        if (agent._isAttack == true)
         {
-            return;
+            if(agent.mainCar == false)
+            {
+                
+                Vector3 playerDirection = agent.playerTransform.position - agent.transform.position;
+
+                if (playerDirection.magnitude < agent.config.maxSightDistance)
+                {
+                    return;
+                }
+                agent.stateMachine.ChangeState(AiStateId.ChasePlayer);
+                agent.RadiusAttackCurrent = agent.RadiusAttackPlayer;
+                agent.navMeshAgent.speed = agent.EnemyMaxSpeed;
+
+                playerDirection.Normalize();
+            }
+            
         }
-
-        Vector3 agentDirection = agent.transform.forward;
-
-        playerDirection.Normalize();
-
-        float dotProduct = Vector3.Dot(playerDirection, agentDirection);
-        if(dotProduct > 0.0f)
+        else
         {
             
-            agent.stateMachine.ChangeState(AiStateId.ChasePlayer);
+           
+            agent.Pattrolling();
+
+            agent.RadiusAttackCurrent = agent.RadiusAttackStandart;
             
+            if(agent.pointDistanse > agent.RadiusWalk)
+            {
+                agent.navMeshAgent.speed = agent.EnemyMaxSpeed;
+            }
+            else
+            {
+                agent.navMeshAgent.speed = agent.EnemySpeed;
+            }
+
         }
+
+
+       
+
+       
+
+       
+
+        
     }
 
     public void Exit(AiAgent agent)

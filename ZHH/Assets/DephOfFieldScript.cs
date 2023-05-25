@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Rendering.Universal;
+
 
 public class DephOfFieldScript : MonoBehaviour
 {
-    
+    public Gun_Zombie gun;
+    private ZoomScoupSniper sniper;
+   
+
     Ray raycast;
     RaycastHit hit;
     bool isHit;
     float hitDistance;
+  
+    public float focusSpeed;
+    public Volume volume;
+    VolumeProfile postProcessing;
 
 
 
     //public Volume volume;
 
 
-    DepthOfField dofComponent;
+   
     //public VolumeProfile profile1;
    
     //*-+.467   
@@ -30,6 +37,8 @@ public class DephOfFieldScript : MonoBehaviour
    
     void Start()
     {
+        postProcessing = volume.profile;
+        sniper = gun.gameObject.GetComponent<ZoomScoupSniper>();
        /* Volume volume = gameObject.GetComponent<Volume>();
         DepthOfField tmp;
         if (volume.profile.TryGet<DepthOfField>(out tmp))
@@ -49,18 +58,18 @@ public class DephOfFieldScript : MonoBehaviour
 
     void Update()
     {
-        raycast = new Ray(transform.position, transform.forward * 100);
+        raycast = new Ray(transform.position, transform.forward * gun.OptionGun.range_gun);
 
         isHit = false;
 
-        if(Physics.Raycast(raycast, out hit, 100))
+        if(Physics.Raycast(raycast, out hit, gun.OptionGun.range_gun))
         {
             isHit = true;
             hitDistance = Vector3.Distance(transform.position, hit.point);
         }
         else
         {
-            if(hitDistance < 100)
+            if(hitDistance < gun.OptionGun.range_gun)
             {
                 hitDistance++;
             }
@@ -71,7 +80,22 @@ public class DephOfFieldScript : MonoBehaviour
 
     void SetFocus()
     {
-        
+
+        DepthOfField dephOfField;
+        if(postProcessing.TryGet(out  dephOfField))
+        {
+            dephOfField.focusDistance.value = Mathf.Lerp(dephOfField.focusDistance.value, hitDistance, Time.deltaTime * focusSpeed);
+            if(sniper.scoupActive8X == true)
+            {
+                dephOfField.aperture.value = 1f;
+                dephOfField.focalLength.value = 200f;
+            }
+            else
+            {
+                dephOfField.aperture.value = 2f;
+                dephOfField.focalLength.value = 150f;
+            }
+        }
         
     }
 
@@ -82,9 +106,6 @@ public class DephOfFieldScript : MonoBehaviour
             Gizmos.DrawSphere(hit.point, 0.1f);
 
             Debug.DrawRay(transform.position, transform.forward * Vector3.Distance(transform.position, hit.point));
-
-
-
         }
         else
         {

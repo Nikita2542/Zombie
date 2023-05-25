@@ -40,6 +40,10 @@ TagManager:
   - Weapon Wheel
   - Input Text
   - Head
+  - Ground
+  - Wall
+  - TargetSlizator
+  - Rem
   layers:
   - Default
   - TransparentFX
@@ -48,7 +52,7 @@ TagManager:
   - Water
   - UI
   - Grass
-  - 
+  - Ground
   - RCC
   - RCC_WheelCollider
   - RCC_DetachablePart

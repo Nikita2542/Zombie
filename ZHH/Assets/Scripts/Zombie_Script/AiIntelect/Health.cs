@@ -10,65 +10,62 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class Health : MonoBehaviour
 {
 
-     public float maxHealth;
-    public GunOptionsMain gunOptions;
-    
-    [HideInInspector]
-    public GameObject slizClone;
-     public GameObject slizPrefab;
-     public GameObject slizTarget;
-    public GameObject targetGun;
-    public GameObject hips;
-     public GameObject Armature;
+    public float maxHealth;
+    [Header("Префаб С.О.К")]
+    [Space(5)]
+    public GameObject slizPrefab;
 
-    public Image rem;
+    [HideInInspector] public GunOptionsMain gunOptions;
+    [HideInInspector] public GameObject slizClone;
+    [HideInInspector] public GameObject slizTarget;
+    [HideInInspector] public GameObject targetGun;
+    [HideInInspector] public GameObject hips;
+    [HideInInspector] public GameObject Armature;
+    [HideInInspector] public float currentHealth;
+    [HideInInspector] public float blinkIntensity;
+    [HideInInspector] public float blinkDuration;
+    [HideInInspector] public int sokGreen;
+    [HideInInspector] public Image rem;
+
+    AiAgent agent;
+    SkinnedMeshRenderer skinnedMeshRenderer;
+    UIHealthBar healthBar;
+    Ragdoll ragdoll;
+
     private float remSec;
     private bool remActiv;
-
-    
-    
-    
-    [HideInInspector]
-        public float currentHealth;
-    
-    AiAgent agent;
-    
-    SkinnedMeshRenderer skinnedMeshRenderer;
-    
-    UIHealthBar healthBar;
-    
-    Ragdoll ragdoll;
-    
-
-     public float blinkIntensity;
-     public float blinkDuration;
-    float blinkTimer;
-
-    float slizSpeed = 50.0f;
-
-    [HideInInspector] public int slizYellow;
-
     private bool slizPickup = false;
-    
-    
+
+    float blinkTimer;
+    float slizSpeed = 50.0f; 
     float secundDead;
     float second;
-    // Start is called before the first frame update
+
     void Start()
     {
-        rem.gameObject.SetActive(false);
+        rem = GameObject.FindGameObjectWithTag("Rem").transform.GetChild(0).GetComponent<Image>();
+        gunOptions = GameObject.FindGameObjectWithTag("Gun Main").GetComponent<GunOptionsMain>();
+        
+        
         agent = GetComponent<AiAgent>();
+        slizTarget = gameObject.transform.GetChild(3).gameObject;
+        targetGun = GameObject.FindGameObjectWithTag("TargetSlizator");
+        Armature = gameObject.transform.GetChild(0).gameObject;
+        hips = Armature.transform.GetChild(0).gameObject;
+
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         healthBar = GetComponentInChildren<UIHealthBar>();
         ragdoll = GetComponent<Ragdoll>();
         currentHealth = maxHealth;
-
+        blinkIntensity = 10;
+        blinkDuration = 0.1f;
         var rigidBodies = GetComponentsInChildren<Rigidbody>();
         foreach (var rigidBody in rigidBodies)
         {
             HitBox hitBox = rigidBody.gameObject.AddComponent<HitBox>();
             hitBox.health = this;
         }
+        rem.gameObject.SetActive(false);
     }
 
     public void TakeDamage(float amount, Vector3 direction)
@@ -101,9 +98,9 @@ public class Health : MonoBehaviour
 
         if (slizClone.transform.position == targetGun.transform.position)
         {
-            slizYellow++;
+            sokGreen++;
             slizPickup = true;
-            PlayerPrefs.SetInt("sliz_yellow", slizYellow);
+            PlayerPrefs.SetInt("sokGreen", sokGreen);
             DieSlizz();
 
             PlayerPrefs.Save();
@@ -116,6 +113,9 @@ public class Health : MonoBehaviour
 
     private void Die(Vector3 direction)
     {
+        
+        agent.navMeshAgent.speed = 0;
+        
         AiDeathState deathState = agent.stateMachine.GetState(AiStateId.Death) as AiDeathState;
         deathState.direction = direction;
         agent.stateMachine.ChangeState(AiStateId.Death);
@@ -134,9 +134,9 @@ public class Health : MonoBehaviour
     
     private void Update()
     {
-        if (PlayerPrefs.HasKey("sliz_yellow"))
+        if (PlayerPrefs.HasKey("sokGreen"))
         {
-            slizYellow = PlayerPrefs.GetInt("sliz_yellow");
+            sokGreen = PlayerPrefs.GetInt("sokGreen");
         }
         blinkTimer -= Time.deltaTime;
         float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);

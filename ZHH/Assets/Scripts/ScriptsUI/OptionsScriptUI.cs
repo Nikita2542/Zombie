@@ -21,7 +21,7 @@ public class OptionsScriptUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        /*if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(activeOptions == false)
             {
@@ -33,7 +33,7 @@ public class OptionsScriptUI : MonoBehaviour
                 Returne();
                 
             }
-        }
+        }*/
     }
 
     public void Pause()

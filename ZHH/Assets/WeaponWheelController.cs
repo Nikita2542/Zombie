@@ -22,9 +22,9 @@ public class WeaponWheelController : MonoBehaviour
 
     [Header("Продажа")]
     public int saleAmmo;
-    public int saleSlizz;
+    public int saleSok;
 
-    private int sliz_yellow;
+    private int sokGreen;
     private float secundomer;
     private float startTimeScale;
     private float startFixedDeltaTime;
@@ -32,6 +32,7 @@ public class WeaponWheelController : MonoBehaviour
     [HideInInspector] public Animator anim;
     [HideInInspector] public TextMeshProUGUI ammoText;
     [HideInInspector] public GameObject mainFarmUI;
+    private TextMeshProUGUI sokText;
     [HideInInspector] public Image cyrcleImage;
 
 
@@ -39,6 +40,9 @@ public class WeaponWheelController : MonoBehaviour
     [HideInInspector] public float timeScale;
     private bool weaponWheelSelected = false;
     private bool activeCraft;
+
+    private bool sokSaleBool;
+    private float secSokSale;
     public void Start()
     {
         options = GameObject.FindGameObjectWithTag("Canvas").GetComponentInParent<OptionsScriptUI>();
@@ -48,6 +52,9 @@ public class WeaponWheelController : MonoBehaviour
         sniperGun = GameObject.FindGameObjectWithTag("Sniper Main").GetComponentInParent<Gun_Zombie>();
         ammoText = GameObject.FindGameObjectWithTag("Ammo Text").GetComponent<TextMeshProUGUI>();
         mainFarmUI = GameObject.FindGameObjectWithTag("Farm Ammo");
+        sokText = mainFarmUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        sokText.text = "-" + saleSok.ToString();
+        sokText.gameObject.SetActive(false);
         cyrcleImage = GameObject.FindGameObjectWithTag("Image Cyrcle").GetComponent<Image>();
         anim = GetComponent<Animator>();
 
@@ -62,7 +69,27 @@ public class WeaponWheelController : MonoBehaviour
 
     void Update()
     {
-        if(options.activeOptions == false)
+        if(sokSaleBool == true)
+        {
+            if(secSokSale < 0.1f)
+            {
+                secSokSale += Time.deltaTime;
+                sokText.gameObject.SetActive(true);
+                sokText.gameObject.transform.position = new Vector3(sokText.transform.position.x, sokText.transform.position.y + Time.deltaTime * 1000, 0);
+            }
+            if (secSokSale >= 0.1f)
+            {
+                sokText.gameObject.SetActive(false);
+                sokSaleBool = false;
+                secSokSale = 0;
+            }
+
+        }
+        else
+        {
+            sokText.gameObject.transform.position = new Vector3(mainFarmUI.transform.position.x, mainFarmUI.transform.position.y, 0);
+        }
+        if (options.activeOptions == false)
         {
             StopSlowMotion();
             
@@ -100,9 +127,9 @@ public class WeaponWheelController : MonoBehaviour
         {
             anim.SetBool("OpenWeaponWheel", false);
         }
-        if (PlayerPrefs.HasKey("sliz_yellow"))
+        if (PlayerPrefs.HasKey("sokGreen"))
         {
-            sliz_yellow = PlayerPrefs.GetInt("sliz_yellow");
+            sokGreen = PlayerPrefs.GetInt("sokGreen");
         }
         if (gunMain.gunActiv == true)
         {
@@ -162,43 +189,51 @@ public class WeaponWheelController : MonoBehaviour
         {
             activeCraft = false;
             mainFarmUI.gameObject.SetActive(true);
-            if (sliz_yellow >= saleSlizz)
+            if (sokGreen >= saleSok)
             {
+                
                 if (Input.GetMouseButton(1))
                 {
+                    
                     if (secundomer < 0.2f)
                     {
                         secundomer += Time.deltaTime;
                         cyrcleImage.gameObject.SetActive(true);
+                        
 
                         if (cyrcleImage.fillAmount < 1)
                         {
-
+                            
+                           
                             cyrcleImage.fillAmount += Time.deltaTime / 0.2f;
+                            
                         }
                     }
+                    
                     if (secundomer > 0.2f)
                     {
                         if (cyrcleImage.fillAmount >= 1f)
                         {
-                            if(gunMain.gunActiv == true)
+                            sokSaleBool = true;
+                            
+                            if (gunMain.gunActiv == true)
                             {
                                 avtomatGun.OptionGun.puliAll += saleAmmo;
-                                sliz_yellow -= saleSlizz;
+                                sokGreen -= saleSok;
                             }
                             if (gunMain.PulemetActiv == true)
                             {
                                 pulemetGun.OptionGun.puliAll += saleAmmo;
-                                sliz_yellow -= saleSlizz;
+                                sokGreen -= saleSok;
                             }
                             if (gunMain.sniperActiv == true)
                             {
                                 sniperGun.OptionGun.puliAll += saleAmmo;
-                                sliz_yellow -= saleSlizz;
+                                sokGreen -= saleSok;
                             }
 
 
-                            PlayerPrefs.SetInt("sliz_yellow", sliz_yellow);
+                            PlayerPrefs.SetInt("sokGreen", sokGreen);
                             cyrcleImage.fillAmount = 0;
                             secundomer = 0;
                         }
